@@ -1,0 +1,42 @@
+/* PAGE LAYOUT */
+.login-page {
+  min-height: calc(100vh - 70px); /* navbar height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f6f8;
+  padding: 1rem;
+}
+
+/* LOGIN CARD — THIS WAS MISSING */
+.login-card {
+  width: 100%;
+  max-width: 420px;      /* 🔥 CRITICAL */
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 2rem 2.25rem;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+}
+
+/* FORM CONTENT */
+.form-wrapper {
+  width: 100%;
+}
+
+/* BUTTON SIZE — NOT FULL WIDTH ON DESKTOP */
+.login-btn {
+  min-width: 120px;
+  padding: 0.45rem 1.25rem;
+  font-size: 0.95rem;
+}
+
+/* MOBILE ONLY */
+@media (max-width: 576px) {
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  .login-btn {
+    width: 100%;
+  }
+}

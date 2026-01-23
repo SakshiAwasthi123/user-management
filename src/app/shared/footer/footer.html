@@ -1,0 +1,47 @@
+<footer class="app-footer">
+  <div class="container">
+
+    <div class="footer-top">
+
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="Logo" />
+        <span>User Management System</span>
+      </div>
+
+      <div class="footer-contact">
+        <span class="nav-title">Contact</span>
+
+        <div class="contact-item">
+          📍 2nd Floor, Tech Park, Noida, UP – 201301
+        </div>
+
+        <div class="contact-item">
+          ✉ support@usermanagement.com
+        </div>
+
+        <div class="contact-item">
+          ☎ +91 98765 43210
+        </div>
+      </div>
+
+
+      <div class="footer-nav">
+        <div class="nav-group" *ngFor="let m of menu">
+          <span class="nav-title">{{ m.title }}</span>
+
+          <a
+            *ngFor="let c of m.children"
+            [routerLink]="c.route">
+            {{ c.title }}
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      © {{ currentYear }} User Management System
+    </div>
+
+  </div>
+</footer>

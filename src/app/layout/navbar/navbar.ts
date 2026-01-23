@@ -42,6 +42,11 @@ export class Navbar {
 
   applyRoleFilter() {
 
+    if (!this.auth.isLoggedIn()) {
+      this.menu = [...MENU];
+      return;
+    }
+
     const role = this.auth.getRole();
 
     this.menu = MENU
@@ -52,7 +57,6 @@ export class Navbar {
         }
 
         if (m.children) {
-
           const allowedChildren = m.children.filter(c => {
             if (!c.roles) return true;
             return c.roles.includes(role!);
@@ -72,6 +76,7 @@ export class Navbar {
       })
       .filter(m => m !== null);
   }
+
 
   toggleMenu() {
     this.open = !this.open;
