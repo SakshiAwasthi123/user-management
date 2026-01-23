@@ -3,14 +3,12 @@
   <div class="card shadow-lg border-0" style="width: 420px;">
     <div class="card-body p-4">
 
-      <!-- Header -->
       <div class="text-center mb-4">
         <img src="assets/logo.png" height="60" class="mb-2">
         <h4 class="fw-bold mb-1">Sign in to your account</h4>
         <p class="text-muted small">User Management System</p>
       </div>
 
-      <!-- 🔴 GLOBAL ERROR (TOP POSITION) -->
       <div
         *ngIf="errorMsg"
         class="alert alert-danger text-center py-2 mb-3">
@@ -19,7 +17,6 @@
 
       <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
 
-        <!-- Email -->
         <app-input
           label="Email"
           type="email"
@@ -32,7 +29,6 @@
           ">
         </app-input>
 
-        <!-- Password -->
         <app-input
           label="Password"
           type="password"
@@ -45,7 +41,6 @@
           ">
         </app-input>
 
-        <!-- Remember Me -->
         <div class="form-check form-check-sm mb-3 d-flex align-items-center">
           <input
             class="form-check-input me-2"
@@ -59,7 +54,6 @@
         </div>
 
 
-        <!-- Submit Button -->
         <app-button
             label="Login"
             type="submit"
@@ -70,7 +64,6 @@
 
       </form>
 
-      <!-- Footer -->
       <div class="text-center mt-3">
         <span class="text-muted">Don’t have an account?</span>
         <a routerLink="/register" class="fw-semibold ms-1">
