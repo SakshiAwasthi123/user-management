@@ -1,0 +1,24 @@
+<div class="list-toolbar">
+  <h2 style="margin: 1rem;">User List</h2>
+
+  <div class="search-box">
+    <input
+      type="text"
+      placeholder="Search users..."
+      (input)="table.filter($any($event.target).value)"
+    />
+    <span class="icon">🔍</span>
+  </div>
+</div>
+<div class="table-card">
+  <app-shared-table #table
+  [data]="users"
+  [columns]="['id','name','email','department','status']"
+  (view)="open($event)"
+  (edit)="goEdit($event)"
+  (remove)="delete($event)">
+</app-shared-table>
+
+</div>
+
+       

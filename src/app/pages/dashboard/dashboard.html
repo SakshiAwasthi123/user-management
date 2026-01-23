@@ -1,0 +1,34 @@
+<div class="dashboard">
+
+  <h2 class="page-title">Dashboard Overview</h2>
+
+  <div class="card-grid">
+    <div class="dash-card" *ngFor="let c of cards">
+      <div class="card-title">{{c.title}}</div>
+      <div class="card-value">{{c.value}}</div>
+    </div>
+  </div>
+
+  <div class="recent-box">
+    <h4>Recent Activity</h4>
+
+    <table class="activity-table">
+      <tr>
+        <th>User</th>
+        <th>Action</th>
+        <th>Status</th>
+      </tr>
+      <tr>
+        <td>John Smith</td>
+        <td>Added New User</td>
+        <td>Completed</td>
+      </tr>
+      <tr>
+        <td>Emily Stone</td>
+        <td>Updated Profile</td>
+        <td>Completed</td>
+      </tr>
+    </table>
+  </div>
+
+</div>

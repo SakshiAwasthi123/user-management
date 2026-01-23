@@ -1,0 +1,15 @@
+<div class="mb-3">
+  <label class="form-label">{{ label }}</label>
+
+  <input
+    class="form-control"
+    [type]="type"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (ngModelChange)="onChange($event)"
+  />
+
+  <small class="text-danger" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </small>
+</div>

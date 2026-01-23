@@ -1,0 +1,61 @@
+<section class="user-form-page">
+
+  <mat-card class="user-form-card">
+
+    <div class="form-header">
+      <h2>{{ id ? 'Edit User' : 'Add New User' }}</h2>
+      <p class="form-subtitle">Enter user information below</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+      <app-input
+        label="Full Name"
+        [value]="form.get('name')?.value"
+        (valueChange)="form.get('name')?.setValue($event)"
+        [errorMessage]="form.get('name')?.invalid && form.get('name')?.touched ? 'Name required' : ''">
+      </app-input>
+
+      <app-input
+        label="Email"
+        type="email"
+        [value]="form.get('email')?.value"
+        (valueChange)="form.get('email')?.setValue($event)"
+        [errorMessage]="form.get('email')?.invalid && form.get('email')?.touched ? 'Valid email required' : ''">
+      </app-input>
+
+      <app-select
+        label="Department"
+        [options]="departmentOptions"
+        [selectedValue]="form.get('department')?.value"
+        (selectionChange)="form.get('department')?.setValue($event)">
+      </app-select>
+
+      <app-select
+        label="Role"
+        [options]="roleOptions"
+        [selectedValue]="form.get('role')?.value"
+        (selectionChange)="form.get('role')?.setValue($event)">
+      </app-select>
+
+      <app-select
+        label="Status"
+        [options]="statusOptions"
+        [selectedValue]="form.get('status')?.value"
+        (selectionChange)="form.get('status')?.setValue($event)">
+      </app-select>
+
+      <div class="form-footer">
+        <app-button label="Cancel" type="button" (clicked)="goBack()"></app-button>
+        <app-button
+          [label]="id ? 'Update User' : 'Save User'"
+          [disabled]="form.invalid"
+          (clicked)="submit()">
+        </app-button>
+      </div>
+
+    </form>
+
+  </mat-card>
+
+</section>

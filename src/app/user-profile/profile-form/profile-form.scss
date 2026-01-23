@@ -1,0 +1,84 @@
+.profile-form{padding:0 32px;}
+
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 24px;}
+
+.field{display:flex;flex-direction:column;gap:4px;}
+
+input,select{
+  padding:12px 14px;border-radius:14px;
+  border:1px solid #dbe3ff;background:#f7f9ff;
+}
+
+.skill-row{
+  display:flex;
+  gap:12px;
+}
+
+.btn-skill{
+  background:linear-gradient(135deg,#6a5cff,#8f7cff);
+  border:none;
+  color:#fff;
+  padding:12px 22px;
+  border-radius:14px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.skill-tags{
+  margin-top:12px;
+}
+
+.skill-tags span{
+  background:#eef2ff;
+  padding:6px 14px;
+  border-radius:20px;
+  margin-right:8px;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+}
+
+.skill-tags b{
+  cursor:pointer;
+  color:#ff4444;
+}
+
+.chips span{
+  background:#eef1ff;padding:6px 12px;border-radius:16px;margin:6px;display:inline-block;
+}
+
+.action-bar{
+  margin-top:28px;
+  display:flex;
+  gap:18px;
+  justify-content:flex-start;
+}
+
+.btn{
+  padding:14px 28px;
+  border-radius:16px;
+  font-weight:600;
+  border:none;
+  cursor:pointer;
+  transition:.25s;
+}
+
+.btn.save{
+  background:linear-gradient(135deg,#5a7cff,#6a5cff);
+  color:white;
+  box-shadow:0 10px 24px rgba(90,124,255,.45);
+}
+
+.btn.reset{
+  background:#ffeaea;
+  color:#ff4444;
+}
+
+.btn.cancel{
+  background:#f2f4f8;
+}
+
+.ghost{background:#f2f2f2;}
+.warn{background:#ffe4e4;color:#ff0000;}
+.primary{background:linear-gradient(135deg,#6a5cff,#7c7cff);color:#fff;}
+button{border:none;border-radius:14px;padding:12px 22px;cursor:pointer;}

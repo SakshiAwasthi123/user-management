@@ -1,0 +1,50 @@
+<form [formGroup]="form" class="profile-form">
+
+  <div class="grid">
+    <div>
+      <label>Full Name</label>
+      <input formControlName="name" placeholder="Full name">
+    </div>
+
+    <div>
+      <label>Email</label>
+      <input formControlName="email" placeholder="Email address">
+    </div>
+
+    <div>
+      <label>Department</label>
+      <select formControlName="department">
+        <option value="">Select</option>
+        <option>HR</option>
+        <option>Tech</option>
+        <option>Sales</option>
+      </select>
+    </div>
+  </div>
+<div class="field full">
+  <label>Skills</label>
+
+  <div class="skill-row">
+    <input type="text"
+           formControlName="skillInput"
+           placeholder="Type skill & press Add" />
+
+    <button type="button" class="btn-skill" (click)="addSkill()">Add</button>
+  </div>
+
+  <div class="skill-tags" *ngIf="skills.length">
+    <span *ngFor="let s of skills; let i=index">
+      {{s}}
+      <b (click)="removeSkill(i)">×</b>
+    </span>
+  </div>
+</div>
+
+
+<div class="action-bar">
+  <button type="reset" class="btn cancel">Cancel</button>
+  <button type="button" class="btn reset" (click)="form.reset()">Reset</button>
+  <button type="button" class="btn save" (click)="save()">Save Profile</button>
+</div>
+
+</form>

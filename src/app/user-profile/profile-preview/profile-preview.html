@@ -1,0 +1,19 @@
+<div class="preview-card" *ngIf="profile">
+
+  <div class="avatar">{{ profile.name[0] }}</div>
+  <h3>{{ profile.name }}</h3>
+  <p>{{ profile.email }}</p>
+
+  <div class="row">
+    <label>Department</label>
+    <span>{{ profile.department }}</span>
+  </div>
+
+  <div class="row">
+    <label>Skills</label>
+    <div class="skill-list">
+      <span *ngFor="let s of profile.skills">{{ s }}</span>
+    </div>
+  </div>
+
+</div>

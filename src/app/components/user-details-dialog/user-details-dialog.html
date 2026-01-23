@@ -1,0 +1,35 @@
+<mat-dialog-content class="dialog-content">
+
+<div class="profile-header">
+  <mat-icon class="avatar-icon">person</mat-icon>
+  <div>
+    <h2>{{ user.name }}</h2>
+    <p>{{ user.email }}</p>
+  </div>
+</div>
+
+<table class="profile-table">
+  <tr>
+    <th>Department</th>
+    <td>{{ user.department }}</td>
+  </tr>
+  <tr>
+    <th>Role</th>
+    <td>{{ user.role }}</td>
+  </tr>
+  <tr>
+    <th>Status</th>
+    <td>
+      <span class="status-pill" [ngClass]="user.status.toLowerCase()">
+        {{ user.status }}
+      </span>
+    </td>
+  </tr>
+</table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end" class="dialog-actions">
+  <button mat-flat-button color="primary" (click)="download()">Download PDF</button>
+  <button mat-stroked-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
