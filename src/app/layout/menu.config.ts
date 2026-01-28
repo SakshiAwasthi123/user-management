@@ -11,9 +11,10 @@ export interface MenuItem {
   roles?: string[];
 }
 
-export const MENU: MenuItem[] = [
+  export const MENU: MenuItem[] = [
 
-  { title: 'Dashboard', route: '/dashboard' },
+    { title: 'Home', route: '/home' },
+    { title: 'About', route: '/about' },
 
   {
     title: 'Users',
@@ -23,7 +24,6 @@ export const MENU: MenuItem[] = [
       { title: 'Add User', route: '/users/add', roles: ['Admin'] }
     ]
   },
-
   {
     title: 'Products',
     children: [
@@ -31,7 +31,6 @@ export const MENU: MenuItem[] = [
       { title: 'Categories', route: '/products/categories', roles: ['Admin'] }
     ]
   },
-
   {
     title: 'Reports',
     children: [
@@ -39,7 +38,6 @@ export const MENU: MenuItem[] = [
       { title: 'Yearly', route: '/reports/yearly', roles: ['Admin', 'Manager'] }
     ]
   },
-
   {
     title: 'Profile',
     children: [
@@ -47,4 +45,5 @@ export const MENU: MenuItem[] = [
       { title: 'Profile View', route: '/profile/preview' }
     ]
   }
+
 ];

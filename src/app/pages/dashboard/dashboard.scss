@@ -1,90 +1,109 @@
-.dashboard {
-  padding: 30px;
+.dashboard-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  padding: 25px 20px 50px;
 }
 
-.page-title {
-  font-size: 28px;
-  font-weight: 700;
-  margin-bottom: 24px;
+.dashboard-header {
+  margin-bottom: 20px;
+
+  h2 {
+    font-size: 26px;
+    margin-bottom: 4px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #777;
+  }
 }
 
-.card-grid {
+/* Stats */
+.stats-section {
+  background: #f4f6fb;
+  padding: 25px;
+  border-radius: 16px;
+  margin-bottom: 30px;
+}
+
+.stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
 }
 
-.dash-card {
-  background: white;
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.14);
+  }
+}
+
+.stat-icon {
+  font-size: 28px;
+  background: #eef2ff;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.stat-title {
+  font-size: 13px;
+  color: #666;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Activity */
+.activity-card {
+  background: #fff;
   border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.08);
-}
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
-.card-title {
-  font-size: 14px;
-  color: #64748b;
-}
-
-.card-value {
-  font-size: 30px;
-  font-weight: 800;
-  margin-top: 8px;
-}
-
-.recent-box {
-  background: white;
-  margin-top: 40px;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 12px 30px rgba(0,0,0,.08);
+  h3 {
+    margin-bottom: 15px;
+  }
 }
 
 .activity-table {
   width: 100%;
-  margin-top: 14px;
   border-collapse: collapse;
+
+  th {
+    text-align: left;
+    font-size: 13px;
+    color: #777;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 8px;
+  }
+
+  td {
+    padding: 10px 0;
+    border-bottom: 1px solid #f1f1f1;
+    font-size: 14px;
+  }
 }
 
-.activity-table th, td {
-  padding: 12px;
-  text-align: left;
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
 }
 
-.activity-table th {
-  color: #64748b;
-}
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-
-  .dashboard {
-    padding: 16px;
-  }
-
-  .page-title {
-    font-size: 20px;
-    margin-bottom: 16px;
-  }
-
-  .card-grid {
-    gap: 12px;
-  }
-
-  .dash-card {
-    padding: 16px;
-    border-radius: 12px;
-  }
-
-  .card-title {
-    font-size: 12px;
-  }
-
-  .card-value {
-    font-size: 22px;
-  }
-
-  .recent-box {
-    padding: 16px;
-    margin-top: 24px;
-  }
+.success {
+  background: #e6f6ee;
+  color: #1f9254;
 }

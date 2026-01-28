@@ -1,76 +1,33 @@
-<div class="container vh-100 d-flex align-items-center justify-content-center bg-light">
+<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
 
-  <div class="card shadow-lg border-0" style="width: 420px;">
-    <div class="card-body p-4">
+  <h2>Sign in</h2>
+  <p class="form-subtitle">User Management System</p>
 
-      <div class="text-center mb-4">
-        <img src="assets/logo.png" height="60" class="mb-2">
-        <h4 class="fw-bold mb-1">Sign in to your account</h4>
-        <p class="text-muted small">User Management System</p>
-      </div>
+  <label>Email</label>
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="email"
+    placeholder="Enter email"
+    required
+  />
 
-      <div
-        *ngIf="errorMsg"
-        class="alert alert-danger text-center py-2 mb-3">
-        {{ errorMsg }}
-      </div>
+  <label>Password</label>
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="password"
+    placeholder="Enter password"
+    required
+  />
 
-      <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+  <button type="submit" class="login-btn">Login</button>
 
-        <app-input
-          label="Email"
-          type="email"
-          placeholder="Enter email"
-          [(value)]="email"
-          [errorMessage]="
-            loginForm.submitted && !email
-              ? 'Email is required'
-              : ''
-          ">
-        </app-input>
+  <p class="link">
+    Don’t have an account?
+    <a routerLink="/register">Create account</a>
+  </p>
 
-        <app-input
-          label="Password"
-          type="password"
-          placeholder="Enter password"
-          [(value)]="password"
-          [errorMessage]="
-            loginForm.submitted && !password
-              ? 'Password is required'
-              : ''
-          ">
-        </app-input>
+  <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
 
-        <div class="form-check form-check-sm mb-3 d-flex align-items-center">
-          <input
-            class="form-check-input me-2"
-            type="checkbox"
-            id="rememberMe"
-            name="rememberMe"
-            [(ngModel)]="rememberMe">
-          <label class="form-check-label small mb-0" for="rememberMe">
-            Remember me
-          </label>
-        </div>
-
-
-        <app-button
-            label="Login"
-            type="submit"
-            class="w-100"
-            [disabled]="loginForm.invalid === true">
-        </app-button>
-
-      </form>
-
-      <div class="text-center mt-3">
-        <span class="text-muted">Don’t have an account?</span>
-        <a routerLink="/register" class="fw-semibold ms-1">
-          Create account
-        </a>
-      </div>
-
-    </div>
-  </div>
-
-</div>
+</form>

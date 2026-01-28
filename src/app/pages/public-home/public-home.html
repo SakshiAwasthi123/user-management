@@ -1,8 +1,47 @@
-<div class="public-home">
-  <h1>User Management System</h1>
-  <p>Manage users, roles, and reports efficiently.</p>
+<div class="home-wrapper">
 
-  <a routerLink="/login" class="btn-primary">
-    Login
-  </a>
+  <!-- SLIDER -->
+  <div class="hero-slider">
+    <div
+      class="slide"
+      *ngFor="let slide of slides; let i = index"
+      [class.active]="i === currentSlide"
+    >
+      <h1>{{ slide.title }}</h1>
+      <p>{{ slide.text }}</p>
+    </div>
+
+    <button class="nav prev" (click)="prevSlide()">‹</button>
+    <button class="nav next" (click)="nextSlide()">›</button>
+  </div>
+
+  <!-- CARDS -->
+  <div class="card-grid">
+
+    <a routerLink="/dashboard" class="home-card">
+      <div class="icon">📊</div>
+      <h3>Dashboard</h3>
+      <p>View statistics and recent activities</p>
+    </a>
+
+    <a routerLink="/users/list" class="home-card">
+      <div class="icon">👥</div>
+      <h3>Users</h3>
+      <p>Manage system users and roles</p>
+    </a>
+
+    <a routerLink="/products/list" class="home-card">
+      <div class="icon">📦</div>
+      <h3>Products</h3>
+      <p>View and manage product inventory</p>
+    </a>
+
+    <a routerLink="/reports/monthly" class="home-card">
+      <div class="icon">📑</div>
+      <h3>Reports</h3>
+      <p>Generate monthly and yearly reports</p>
+    </a>
+
+  </div>
+
 </div>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
@@ -9,4 +9,37 @@ import { RouterModule } from '@angular/router';
   templateUrl: './public-home.html',
   styleUrls: ['./public-home.scss']
 })
-export class PublicHome {}
+export class PublicHome implements OnInit {
+
+  slides = [
+    {
+      title: 'User Management System',
+      text: 'Manage users, roles and permissions easily.'
+    },
+    {
+      title: 'Product & Inventory',
+      text: 'Track and manage your products efficiently.'
+    },
+    {
+      title: 'Reports & Analytics',
+      text: 'Generate monthly and yearly reports quickly.'
+    }
+  ];
+
+  currentSlide = 0;
+
+  ngOnInit() {
+    setInterval(() => {
+      this.nextSlide();
+    }, 4000);
+  }
+
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+  }
+
+  prevSlide() {
+    this.currentSlide =
+      (this.currentSlide - 1 + this.slides.length) % this.slides.length;
+  }
+}

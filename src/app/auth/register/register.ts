@@ -14,9 +14,10 @@ export class Register {
   email = '';
   password = '';
   confirmPassword = '';
+  role = 'User';
+
   errorMsg = '';
   successMsg = '';
-  role = 'User';
 
   constructor(private router: Router) {}
 
@@ -49,8 +50,11 @@ export class Register {
 
     localStorage.setItem('APP_USERS', JSON.stringify(users));
 
+    this.errorMsg = '';
     this.successMsg = 'Account created successfully';
 
-    setTimeout(() => this.router.navigate(['/login']), 1000);
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 1000);
   }
 }

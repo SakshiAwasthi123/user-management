@@ -1,18 +1,92 @@
-.public-home {
-  min-height: 80vh;
+.home-wrapper {
+  padding: 40px 20px;
+}
+
+/* SLIDER */
+.hero-slider {
+  position: relative;
+  height: 220px;
+  margin: 0 auto 40px;
+  max-width: 1100px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(120deg, #0b1b3a, #0f2a5f);
+  color: white;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  padding: 40px 60px;
+}
+
+.slide.active {
+  opacity: 1;
+}
+
+.slide h1 {
+  font-size: 34px;
+  margin-bottom: 10px;
+}
+
+.slide p {
+  font-size: 16px;
+  opacity: 0.85;
+}
+
+/* SLIDER BUTTONS */
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  border: none;
+  color: white;
+  font-size: 26px;
+  padding: 6px 14px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.nav:hover {
+  background: rgba(255,255,255,0.35);
+}
+
+.prev { left: 15px; }
+.next { right: 15px; }
+
+/* CARDS */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.home-card {
+  background: white;
+  border-radius: 16px;
+  padding: 26px;
   text-align: center;
+  text-decoration: none;
+  color: #111;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-h1 {
+.home-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+}
+
+.icon {
   font-size: 36px;
-  margin-bottom: 12px;
-}
-
-p {
-  font-size: 18px;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }

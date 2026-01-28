@@ -1,14 +1,15 @@
 .app-footer {
-  background: #0b1b3a;
+  background:linear-gradient(90deg, #0b1b3a, #0f2a5f);
   color: #cfd6e4;
   font-size: 0.8rem;
+  padding-top: 12px;
 }
 
 .footer-top {
   display: flex;
   justify-content: space-between;
-  gap: 48px;
-  padding: 24px 0;
+  gap: 36px;
+  padding: 18px 0;
 }
 
 .footer-brand {
@@ -16,36 +17,37 @@
   align-items: center;
   gap: 10px;
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .footer-brand img {
-  height: 26px;
+  height: 24px;
 }
 
 .footer-nav {
   display: flex;
-  gap: 48px;
+  gap: 36px;
 }
 
 .nav-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 }
 
 .nav-title {
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  opacity: 0.7;
+  opacity: 0.6;
   margin-bottom: 4px;
 }
 
 .nav-group a {
   color: #cfd6e4;
   text-decoration: none;
-  font-size: 0.8rem;
-  opacity: 0.85;
+  font-size: 0.75rem;
+  opacity: 0.8;
 }
 
 .nav-group a:hover {
@@ -53,41 +55,48 @@
   text-decoration: underline;
 }
 
-.footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  padding: 12px 0;
-  text-align: center;
+.footer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   font-size: 0.75rem;
-  opacity: 0.7;
+  opacity: 0.8;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding: 8px 0;
+  text-align: center;
+  font-size: 0.7rem;
+  opacity: 0.6;
 }
 
 @media (max-width: 768px) {
   .footer-top {
     flex-direction: column;
-    align-items: center;
     text-align: center;
+    gap: 20px;
   }
 
   .footer-nav {
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
   }
-}
-.footer-contact {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: 0.8rem;
-  opacity: 0.85;
-}
 
-.contact-item {
-  line-height: 1.4;
-}
-
-@media (max-width: 768px) {
   .footer-contact {
     align-items: center;
-    text-align: center;
   }
+}
+.app-footer {
+  background:linear-gradient(90deg, #0b1b3a, #0f2a5f);
+  color: #cfd6e4;
+  font-size: 0.75rem;
+  padding-top: 6px;
+}
+.footer-top {
+  padding: 12px 0;
+}
+.footer-bottom {
+  padding: 6px 0;
+  font-size: 0.65rem;
 }

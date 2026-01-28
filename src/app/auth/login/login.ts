@@ -3,13 +3,12 @@ import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { CommonModule } from '@angular/common';
-import { AppButton } from '../../shared/app-button/app-button';
 import { AppInput } from '../../shared/app-input/app-input';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule, AppButton, AppInput],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html'
 })
 export class Login implements OnInit {
@@ -29,7 +28,6 @@ export class Login implements OnInit {
     }
   }
 login(form: any) {
-
   if (form.invalid) {
     return;
   }
@@ -55,7 +53,7 @@ login(form: any) {
     localStorage.removeItem('redirectAfterLogin');
     this.router.navigateByUrl(redirect);
   } else {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/home']);
   }
 }
 

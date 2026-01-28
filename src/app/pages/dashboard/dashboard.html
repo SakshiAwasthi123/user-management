@@ -1,33 +1,75 @@
-<div class="dashboard">
+<div class="dashboard-wrapper">
 
-  <h2 class="page-title">Dashboard Overview</h2>
+  <!-- Header -->
+  <div class="dashboard-header">
+    <h2>Dashboard</h2>
+    <p>Overview of system statistics and recent activity</p>
+  </div>
 
-  <div class="card-grid">
-    <div class="dash-card" *ngFor="let c of cards">
-      <div class="card-title">{{c.title}}</div>
-      <div class="card-value">{{c.value}}</div>
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stats-grid">
+
+      <div class="stat-card">
+        <div class="stat-icon">👥</div>
+        <div>
+          <div class="stat-title">Total Users</div>
+          <div class="stat-value">128</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🟢</div>
+        <div>
+          <div class="stat-title">Active Users</div>
+          <div class="stat-value">96</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">⭐</div>
+        <div>
+          <div class="stat-title">Admins</div>
+          <div class="stat-value">12</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon">🏢</div>
+        <div>
+          <div class="stat-title">Departments</div>
+          <div class="stat-value">5</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
-  <div class="recent-box">
-    <h4>Recent Activity</h4>
+  <!-- Activity Section -->
+  <div class="activity-card">
+    <h3>Recent Activity</h3>
 
     <table class="activity-table">
-      <tr>
-        <th>User</th>
-        <th>Action</th>
-        <th>Status</th>
-      </tr>
-      <tr>
-        <td>John Smith</td>
-        <td>Added New User</td>
-        <td>Completed</td>
-      </tr>
-      <tr>
-        <td>Emily Stone</td>
-        <td>Updated Profile</td>
-        <td>Completed</td>
-      </tr>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Action</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>John Smith</td>
+          <td>Added New User</td>
+          <td><span class="status success">Completed</span></td>
+        </tr>
+        <tr>
+          <td>Emily Stone</td>
+          <td>Updated Profile</td>
+          <td><span class="status success">Completed</span></td>
+        </tr>
+      </tbody>
     </table>
   </div>
 
