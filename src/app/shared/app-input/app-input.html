@@ -1,14 +1,11 @@
 <div class="mb-3">
   <label class="form-label">{{ label }}</label>
-
   <input
     class="form-control"
     [type]="type"
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (ngModelChange)="onChange($event)"
+    [value]="value"
+    (input)="onInput($event.target.value)"
   />
-
   <small class="text-danger" *ngIf="errorMessage">
     {{ errorMessage }}
   </small>

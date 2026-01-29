@@ -41,9 +41,16 @@ html, body {
 input,select{width:100%;padding:12px;border-radius:10px;margin-bottom:10px;border:1px solid #ddd}
 button{padding:10px 22px;border-radius:20px;background:#7c4dff;color:white;border:none}
 
-// .app-shell {
-//   min-height: calc(100vh - 70px); 
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-// }
+a {
+  color: #2563eb;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.text-center {
+  text-align: center;
+}

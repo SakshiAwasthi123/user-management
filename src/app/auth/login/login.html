@@ -1,33 +1,38 @@
-<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+<app-form-wrapper [form]="loginForm" (submitted)="login()">
 
-  <h2>Sign in</h2>
-  <p class="form-subtitle">User Management System</p>
-
-  <label>Email</label>
-  <input
+  <app-input
+    label="Email"
     type="email"
-    name="email"
-    [(ngModel)]="email"
-    placeholder="Enter email"
-    required
-  />
+    [value]="loginForm.get('email')?.value"
+    (valueChange)="loginForm.get('email')?.setValue($event)"
+    [errorMessage]="
+      loginForm.get('email')?.touched && loginForm.get('email')?.invalid
+        ? 'Valid email is required'
+        : ''
+    ">
+  </app-input>
 
-  <label>Password</label>
-  <input
+  <app-input
+    label="Password"
     type="password"
-    name="password"
-    [(ngModel)]="password"
-    placeholder="Enter password"
-    required
-  />
+    [value]="loginForm.get('password')?.value"
+    (valueChange)="loginForm.get('password')?.setValue($event)"
+    [errorMessage]="
+      loginForm.get('password')?.touched && loginForm.get('password')?.invalid
+        ? 'Password is required'
+        : ''
+    ">
+  </app-input>
 
-  <button type="submit" class="login-btn">Login</button>
+  <app-button label="Login" type="submit"></app-button>
 
-  <p class="link">
+  <p class="text-danger text-center mt-2" *ngIf="errorMsg">
+    {{ errorMsg }}
+  </p>
+
+  <p class="text-center mt-3">
     Don’t have an account?
     <a routerLink="/register">Create account</a>
   </p>
 
-  <p class="error" *ngIf="errorMsg">{{ errorMsg }}</p>
-
-</form>
+</app-form-wrapper>

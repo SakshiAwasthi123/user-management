@@ -8,9 +8,9 @@ import { CommonModule } from '@angular/common';
   templateUrl: './app-button.html'
 })
 export class AppButton {
-  @Input() label = 'Button';
-  @Input() type: 'button' | 'submit' = 'button';
-  @Input() disabled = false;
+  @Input() label = 'Submit';
+  @Input() type: 'button' | 'submit' = 'submit';
+  @Input() disabled: boolean | null = false;
 
   @Output() clicked = new EventEmitter<void>();
 

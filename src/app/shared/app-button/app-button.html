@@ -1,7 +1,7 @@
 <button
-  class="app-btn"
   [type]="type"
   [disabled]="disabled"
-  (click)="onClick()">
+  (click)="clicked.emit()"
+  class="btn btn-primary w-100">
   {{ label }}
 </button>

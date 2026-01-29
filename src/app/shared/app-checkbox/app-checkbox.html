@@ -1,11 +1,9 @@
 <div class="form-check mb-3">
   <input
-    class="form-check-input"
     type="checkbox"
-    [(ngModel)]="value"
-    (ngModelChange)="onChange($event)" />
-
-  <label class="form-check-label">
-    {{ label }}
-  </label>
+    class="form-check-input"
+    [checked]="value"
+    (change)="toggle($event.target.checked)"
+  />
+  <label class="form-check-label">{{ label }}</label>
 </div>
