@@ -1,61 +1,99 @@
 <section class="user-form-page">
+<mat-card class="user-form-card">
 
-  <mat-card class="user-form-card">
+<div class="form-header">
+  <h2>{{ id ? 'Edit User' : 'Add New User' }}</h2>
+</div>
 
-    <div class="form-header">
-      <h2>{{ id ? 'Edit User' : 'Add New User' }}</h2>
-      <p class="form-subtitle">Enter user information below</p>
-    </div>
+<div class="toast-success" *ngIf="showToast">
+  ✅ User saved successfully
+</div>
 
-    <form [formGroup]="form" (ngSubmit)="submit()">
+<app-form-wrapper [form]="form" (submitted)="submit()">
 
-      <app-input
-        label="Full Name"
-        [value]="form.get('name')?.value"
-        (valueChange)="form.get('name')?.setValue($event)"
-        [errorMessage]="form.get('name')?.invalid && form.get('name')?.touched ? 'Name required' : ''">
-      </app-input>
+<app-input label="Full Name"
+  [value]="form.get('name')?.value"
+  (valueChange)="form.get('name')?.setValue($event)"
+  [errorMessage]="form.get('name')?.touched && form.get('name')?.invalid ? 'Name is required (min 3 chars)' : ''">
+</app-input>
 
-      <app-input
-        label="Email"
-        type="email"
-        [value]="form.get('email')?.value"
-        (valueChange)="form.get('email')?.setValue($event)"
-        [errorMessage]="form.get('email')?.invalid && form.get('email')?.touched ? 'Valid email required' : ''">
-      </app-input>
+<app-input label="Email" type="email"
+  [value]="form.get('email')?.value"
+  (valueChange)="form.get('email')?.setValue($event)"
+  [errorMessage]="form.get('email')?.touched && form.get('email')?.invalid ? 'Valid email required' : ''">
+</app-input>
 
-      <app-select
-        label="Department"
-        [options]="departmentOptions"
-        [selectedValue]="form.get('department')?.value"
-        (selectionChange)="form.get('department')?.setValue($event)">
-      </app-select>
+<app-select label="Department"
+  [options]="departmentOptions"
+  [selectedValue]="form.get('department')?.value"
+  (selectionChange)="form.get('department')?.setValue($event)">
+</app-select>
+<small class="error" *ngIf="form.get('department')?.touched && form.get('department')?.invalid">
+  Department is required
+</small>
 
-      <app-select
-        label="Role"
-        [options]="roleOptions"
-        [selectedValue]="form.get('role')?.value"
-        (selectionChange)="form.get('role')?.setValue($event)">
-      </app-select>
+<app-select label="Employment Type"
+  [options]="employmentOptions"
+  [selectedValue]="form.get('employedType')?.value"
+  (selectionChange)="form.get('employedType')?.setValue($event)">
+</app-select>
+<small class="error" *ngIf="form.get('employedType')?.touched && form.get('employedType')?.invalid">
+  Employment type is required
+</small>
 
-      <app-select
-        label="Status"
-        [options]="statusOptions"
-        [selectedValue]="form.get('status')?.value"
-        (selectionChange)="form.get('status')?.setValue($event)">
-      </app-select>
+<app-input *ngIf="form.get('employedType')?.value === 'employed'"
+  label="Company"
+  [value]="form.get('company')?.value"
+  (valueChange)="form.get('company')?.setValue($event)"
+  [errorMessage]="form.get('company')?.touched && form.get('company')?.invalid ? 'Company is required' : ''">
+</app-input>
 
-      <div class="form-footer">
-        <app-button label="Cancel" type="button" (clicked)="goBack()"></app-button>
-        <app-button
-          [label]="id ? 'Update User' : 'Save User'"
-          [disabled]="form.invalid"
-          (clicked)="submit()">
-        </app-button>
-      </div>
+<app-radio label="Gender"
+  [options]="genderOptions"
+  [selectedValue]="form.get('gender')?.value"
+  (valueChange)="form.get('gender')?.setValue($event)">
+</app-radio>
+<small class="error" *ngIf="form.get('gender')?.touched && form.get('gender')?.invalid">
+  Gender is required
+</small>
 
-    </form>
+<h5>Skills</h5>
 
-  </mat-card>
+<table class="table table-bordered">
+<tr *ngFor="let skill of skills.controls; let i=index">
+  <td>
+    <app-input
+      [value]="skill.value"
+      (valueChange)="skill.setValue($event)"
+      [errorMessage]="skill.touched && skill.invalid ? 'Skill required' : ''">
+    </app-input>
+  </td>
+  <td>
+    <button type="button" class="btn btn-danger" (click)="removeSkill(i)">X</button>
+  </td>
+</tr>
+</table>
 
+<small class="error" *ngIf="skills.length === 0 && form.touched">
+  At least one skill is required
+</small>
+
+<button type="button" class="btn btn-secondary" (click)="addSkill()">Add Skill</button>
+
+<app-checkbox label="Agree to terms"
+  [value]="form.get('agree')?.value"
+  (valueChange)="form.get('agree')?.setValue($event)">
+</app-checkbox>
+<small class="error" *ngIf="form.get('agree')?.touched && form.get('agree')?.invalid">
+  You must accept terms
+</small>
+
+<div class="form-footer mt-3">
+  <app-button label="Cancel" type="button" (clicked)="goBack()"></app-button>
+  <app-button [label]="id ? 'Update' : 'Save'" type="submit" [disabled]="form.invalid"></app-button>
+</div>
+
+</app-form-wrapper>
+
+</mat-card>
 </section>

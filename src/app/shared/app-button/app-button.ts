@@ -5,11 +5,9 @@ import { CommonModule } from '@angular/common';
   selector: 'app-button',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './app-button.html',
-  styleUrls: ['./app-button.scss']
+  templateUrl: './app-button.html'
 })
 export class AppButton {
-
   @Input() label = 'Button';
   @Input() type: 'button' | 'submit' = 'button';
   @Input() disabled = false;
@@ -17,8 +15,6 @@ export class AppButton {
   @Output() clicked = new EventEmitter<void>();
 
   onClick() {
-    if (!this.disabled) {
-      this.clicked.emit();
-    }
+    this.clicked.emit();
   }
 }

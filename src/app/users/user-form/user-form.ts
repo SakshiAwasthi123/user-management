@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user';
 import { MatCardModule } from '@angular/material/card';
+
 import { AppButton } from '../../shared/app-button/app-button';
 import { AppInput } from '../../shared/app-input/app-input';
 import { AppSelect } from '../../shared/app-select/app-select';
+import { AppCheckbox } from '../../shared/app-checkbox/app-checkbox';
+import { AppRadio } from '../../shared/app-radio/app-radio';
+import { FormWrapper } from '../../shared/form-wrapper/form-wrapper';
 
 @Component({
   selector: 'app-user-form',
@@ -17,7 +21,10 @@ import { AppSelect } from '../../shared/app-select/app-select';
     MatCardModule,
     AppButton,
     AppInput,
-    AppSelect
+    AppSelect,
+    AppCheckbox,
+    AppRadio,
+    FormWrapper
   ],
   templateUrl: './user-form.html',
   styleUrls: ['./user-form.scss']
@@ -26,15 +33,21 @@ export class UserForm implements OnInit {
 
   form!: FormGroup;
   id!: number | null;
+  showToast = false;
 
-  departments = ['HR', 'Tech', 'Finance', 'Sales', 'Marketing'];
-  roles = ['Admin', 'Manager', 'User'];
-  statuses = ['Active', 'Inactive'];
-
+  departments = ['HR', 'Tech', 'Finance'];
   departmentOptions = this.departments.map(d => ({ label: d, value: d }));
-  roleOptions = this.roles.map(r => ({ label: r, value: r }));
-  statusOptions = this.statuses.map(s => ({ label: s, value: s }));
 
+  genderOptions = [
+    { label: 'Male', value: 'Male' },
+    { label: 'Female', value: 'Female' }
+  ];
+
+  employmentOptions = [
+    { label: 'Student', value: 'student' },
+    { label: 'Employed', value: 'employed' },
+    { label: 'Unemployed', value: 'unemployed' }
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -45,33 +58,64 @@ export class UserForm implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      id:[0],
-      name:['', [Validators.required, Validators.minLength(3)]],
-      email:['', [Validators.required, Validators.email]],
-      department:['', Validators.required],
-      role:['', Validators.required],
-      status:['Active', Validators.required]
+      id: [0],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      department: ['', Validators.required],
+      employedType: ['', Validators.required],
+      company: [''],
+      gender: ['', Validators.required],
+      agree: [false, Validators.requiredTrue],
+      skills: this.fb.array([], Validators.required)
     });
 
+    this.form.get('employedType')?.valueChanges.subscribe(val => {
+      const company = this.form.get('company');
+      if (val === 'employed') {
+        company?.setValidators(Validators.required);
+      } else {
+        company?.clearValidators();
+        company?.setValue('');
+      }
+      company?.updateValueAndValidity();
+    });
 
     this.route.paramMap.subscribe(p => {
       const id = p.get('id');
-      if(id){
+      if (id) {
         this.id = +id;
         const user = this.service.getUserById(this.id);
-        if(user) this.form.patchValue(user);
+        if (user) this.form.patchValue(user);
       }
     });
   }
 
-  submit(){
-    if(this.form.invalid) return;
+  get skills(): FormArray {
+    return this.form.get('skills') as FormArray;
+  }
+
+  addSkill() {
+    this.skills.push(this.fb.control('', Validators.required));
+  }
+
+  removeSkill(i: number) {
+    this.skills.removeAt(i);
+  }
+
+  submit() {
+    this.form.markAllAsTouched();
+    if (this.form.invalid) return;
+
     this.service.save(this.form.value as any);
-    this.router.navigateByUrl('/users/list');
+
+    this.showToast = true;
+    setTimeout(() => {
+      this.showToast = false;
+      this.router.navigateByUrl('/users/list');
+    }, 1500);
   }
 
-  goBack(){
+  goBack() {
     this.router.navigateByUrl('/users/list');
   }
-
 }
