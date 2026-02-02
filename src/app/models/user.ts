@@ -3,6 +3,11 @@ export interface User {
   name: string;
   email: string;
   department: string;
-  role: string;
+  employedType: string;
+  company?: string;
   status: string;
+  gender: string;
+  skills: string[];
+  agree: boolean;
+  role: string;
 }

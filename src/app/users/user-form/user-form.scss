@@ -1,99 +1,149 @@
 .user-form-page {
   display: flex;
   justify-content: center;
-  padding: 24px;
+  padding: 20px;
 }
 
 .user-form-card {
   width: 100%;
   max-width: 900px;
-  padding: 28px;
+  padding: 24px;
   border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
 }
 
+/* Header */
 .form-header {
-  margin-bottom: 24px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
 
   h2 {
     margin: 0;
     font-weight: 600;
-    color: #1f2937;
+  }
+
+  .subtitle {
+    font-size: 13px;
+    color: #6b7280;
   }
 }
 
-/* Success toast */
-.toast-success {
-  background: linear-gradient(135deg, #22c55e, #16a34a);
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 10px;
-  margin-bottom: 16px;
-  font-size: 14px;
-  box-shadow: 0 8px 18px rgba(0,0,0,.12);
-  animation: slideDown 0.4s ease;
+/* Grid layout */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
 }
 
-/* Errors */
-.error {
-  color: #dc2626;
-  font-size: 12px;
-  margin-top: 4px;
-  display: block;
+/* Gender */
+.gender-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+/* Force radio inline */
+::ng-deep app-radio .radio-group {
+  display: flex !important;
+  gap: 18px;
 }
 
 /* Skills */
-h5 {
+.skills-section {
   margin-top: 18px;
-  margin-bottom: 10px;
-  font-weight: 600;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 8px;
+.skill-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
-table td {
-  padding: 6px;
-  vertical-align: middle;
+.remove-btn {
+  background: #ef4444;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  cursor: pointer;
 }
 
-table .btn-danger {
-  padding: 6px 12px;
+.add-skill-btn {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 14px;
   border-radius: 8px;
-}
-
-/* Add skill button */
-button.btn-secondary {
   margin-top: 6px;
-  border-radius: 20px;
+  cursor: pointer;
 }
 
-/* Footer buttons */
+/* Agree */
+.terms-section {
+  margin-top: 14px;
+}
+
+/* Footer */
 .form-footer {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 26px;
+  margin-top: 24px;
 }
 
-/* Responsive */
+/* Buttons */
+::ng-deep app-button button {
+  border-radius: 10px;
+  padding: 10px 20px;
+}
+
+/* Error text */
+.error {
+  color: #dc2626;
+  font-size: 12px;
+}
+
+/* Toast */
+.toast-success {
+  background: #22c55e;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Fix dropdown overflow */
+::ng-deep app-select select {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ================= MOBILE ================= */
 @media (max-width: 768px) {
-  .user-form-card {
-    padding: 20px;
+
+  .form-grid {
+    grid-template-columns: 1fr;
   }
 
+  .user-form-card {
+    padding: 16px;
+  }
+
+  /* Keep gender inline */
+  ::ng-deep app-radio .radio-group {
+    flex-direction: row;
+  }
+
+  /* Buttons full width */
   .form-footer {
     flex-direction: column;
   }
-}
 
-/* Animations */
-@keyframes slideDown {
-  from { transform: translateY(-10px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  ::ng-deep app-button button {
+    width: 100%;
+    height: 44px;
+    font-size: 15px;
+  }
 }

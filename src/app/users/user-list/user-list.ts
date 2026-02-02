@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../core/services/user';
+import { UserService } from '../../core/services/user.service';
 import { SharedTable } from '../../components/shared-table/shared-table';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { UserDetailsDialog } from '../../components/user-details-dialog/user-details-dialog';
@@ -20,13 +20,29 @@ export class UserList implements OnInit {
 
   constructor(
     private service: UserService,
-    private router: Router,
+    public router: Router,
     private dialog: MatDialog
   ) {}
 
   ngOnInit() {
     this.users = this.service.getUsers();
   }
+    exportCSV() {
+    const rows = this.users;
+    const headers = Object.keys(rows[0] || {});
+    const csv = [
+      headers.join(','),
+      ...rows.map(r => headers.map(h => `"${r[h] || ''}"`).join(','))
+    ].join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'users.csv';
+    a.click();
+    }
+
+
 
   open(user: any) {
     this.dialog.open(UserDetailsDialog, {
@@ -43,4 +59,9 @@ export class UserList implements OnInit {
     this.service.delete(id);
     this.users = this.service.getUsers();
   }
+
+  goAdd() {
+    this.router.navigate(['/users/add']);
+  }
+
 }

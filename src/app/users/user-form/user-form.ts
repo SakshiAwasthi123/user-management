@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../core/services/user';
+import { UserService } from '../../core/services/user.service';
 import { MatCardModule } from '@angular/material/card';
 
 import { AppButton } from '../../shared/app-button/app-button';
@@ -38,6 +38,11 @@ export class UserForm implements OnInit {
   departments = ['HR', 'Tech', 'Finance'];
   departmentOptions = this.departments.map(d => ({ label: d, value: d }));
 
+  statusOptions = [
+    { label: 'Active', value: 'Active' },
+    { label: 'Inactive', value: 'Inactive' }
+  ];
+
   genderOptions = [
     { label: 'Male', value: 'Male' },
     { label: 'Female', value: 'Female' }
@@ -58,16 +63,19 @@ export class UserForm implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      id: [0],
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      id: [null],
+      name: ['', Validators.required],
+      email: ['', Validators.required],
       department: ['', Validators.required],
       employedType: ['', Validators.required],
       company: [''],
+      status: ['', Validators.required],
       gender: ['', Validators.required],
+      skills: this.fb.array([]),
       agree: [false, Validators.requiredTrue],
-      skills: this.fb.array([], Validators.required)
+      role: ['User']
     });
+
 
     this.form.get('employedType')?.valueChanges.subscribe(val => {
       const company = this.form.get('company');
@@ -106,7 +114,14 @@ export class UserForm implements OnInit {
     this.form.markAllAsTouched();
     if (this.form.invalid) return;
 
-    this.service.save(this.form.value as any);
+    const data = this.form.value;
+
+    data.status =
+      data.status?.toLowerCase() === 'active'
+        ? 'Active'
+        : 'Inactive';
+
+    this.service.save(data);
 
     this.showToast = true;
     setTimeout(() => {
@@ -114,6 +129,7 @@ export class UserForm implements OnInit {
       this.router.navigateByUrl('/users/list');
     }, 1500);
   }
+
 
   goBack() {
     this.router.navigateByUrl('/users/list');
