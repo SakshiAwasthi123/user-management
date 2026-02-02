@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../core/services/user.service';
 import { MatCardModule } from '@angular/material/card';
 
+import { UserService } from '../../core/services/user.service';
 import { AppButton } from '../../shared/app-button/app-button';
 import { AppInput } from '../../shared/app-input/app-input';
 import { AppSelect } from '../../shared/app-select/app-select';
@@ -33,10 +33,16 @@ export class UserForm implements OnInit {
 
   form!: FormGroup;
   id!: number | null;
-  showToast = false;
+
+  errorMsg = '';
+  successMsg = '';
 
   departments = ['HR', 'Tech', 'Finance'];
-  departmentOptions = this.departments.map(d => ({ label: d, value: d }));
+
+  departmentOptions = this.departments.map(d => ({
+    label: d,
+    value: d
+  }));
 
   statusOptions = [
     { label: 'Active', value: 'Active' },
@@ -65,7 +71,7 @@ export class UserForm implements OnInit {
     this.form = this.fb.group({
       id: [null],
       name: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       department: ['', Validators.required],
       employedType: ['', Validators.required],
       company: [''],
@@ -75,7 +81,6 @@ export class UserForm implements OnInit {
       agree: [false, Validators.requiredTrue],
       role: ['User']
     });
-
 
     this.form.get('employedType')?.valueChanges.subscribe(val => {
       const company = this.form.get('company');
@@ -88,6 +93,7 @@ export class UserForm implements OnInit {
       company?.updateValueAndValidity();
     });
 
+    // Load user for edit
     this.route.paramMap.subscribe(p => {
       const id = p.get('id');
       if (id) {
@@ -95,6 +101,12 @@ export class UserForm implements OnInit {
         const user = this.service.getUserById(this.id);
         if (user) this.form.patchValue(user);
       }
+    });
+
+    // Clear messages when user edits form
+    this.form.valueChanges.subscribe(() => {
+      this.errorMsg = '';
+      this.successMsg = '';
     });
   }
 
@@ -112,7 +124,12 @@ export class UserForm implements OnInit {
 
   submit() {
     this.form.markAllAsTouched();
-    if (this.form.invalid) return;
+
+    if (this.form.invalid) {
+      this.errorMsg = 'Please fix form errors';
+      this.successMsg = '';
+      return;
+    }
 
     const data = this.form.value;
 
@@ -123,13 +140,15 @@ export class UserForm implements OnInit {
 
     this.service.save(data);
 
-    this.showToast = true;
-    setTimeout(() => {
-      this.showToast = false;
-      this.router.navigateByUrl('/users/list');
-    }, 1500);
-  }
+    this.errorMsg = '';
+    this.successMsg = this.id
+      ? 'User updated successfully!'
+      : 'User added successfully!';
 
+    setTimeout(() => {
+      this.router.navigateByUrl('/users/list');
+    }, 1200);
+  }
 
   goBack() {
     this.router.navigateByUrl('/users/list');

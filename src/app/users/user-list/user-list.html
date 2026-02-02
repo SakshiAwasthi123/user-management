@@ -2,19 +2,15 @@
   <h2 class="page-title">User List</h2>
 
   <div class="toolbar-actions">
-    <button class="add-btn" (click)="goAdd()">
-      ➕ Add User
-    </button>
+    <button class="add-btn" (click)="goAdd()">➕ Add User</button>
 
-    <button class="export-btn" (click)="exportCSV()">
-      ⬇ Export CSV
-    </button>
+    <button class="export-btn" (click)="exportCSV()">⬇ Export CSV</button>
 
     <div class="search-box">
       <input
         type="text"
         placeholder="Search users..."
-        (input)="table.filter($any($event.target).value)"
+        (input)="onSearch($any($event.target).value)"
       />
       <span class="icon">🔍</span>
     </div>
@@ -22,11 +18,22 @@
 </div>
 
 <div class="table-card">
-  <app-shared-table #table
-    [data]="users"
+
+  <div class="empty-msg" *ngIf="users.length === 0">
+    🚫 No users added yet.
+  </div>
+
+  <div class="empty-msg" *ngIf="users.length > 0 && filteredUsers.length === 0">
+    🔍 No matching users found.
+  </div>
+
+  <app-shared-table
+    *ngIf="filteredUsers.length > 0"
+    [data]="filteredUsers"
     [columns]="['id','name','email','department','status']"
     (view)="open($event)"
     (edit)="goEdit($event)"
     (remove)="delete($event)">
   </app-shared-table>
+
 </div>

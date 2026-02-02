@@ -37,12 +37,11 @@ export class Register implements OnInit {
   }
 
   register() {
-    console.log('Register clicked'); 
-
     this.form.markAllAsTouched();
 
     if (this.form.invalid) {
       this.errorMsg = 'Please fix form errors';
+      this.successMsg = '';
       return;
     }
 
@@ -50,6 +49,7 @@ export class Register implements OnInit {
 
     if (password !== confirmPassword) {
       this.errorMsg = 'Passwords do not match';
+      this.successMsg = '';
       return;
     }
 
@@ -57,14 +57,15 @@ export class Register implements OnInit {
 
     if (users.find((u: any) => u.email === email)) {
       this.errorMsg = 'User already exists';
+      this.successMsg = '';
       return;
     }
 
     users.push({ email, password, role });
     localStorage.setItem('APP_USERS', JSON.stringify(users));
 
-    this.successMsg = 'Account created successfully';
     this.errorMsg = '';
+    this.successMsg = 'Account created successfully! Redirecting to login…';
 
     setTimeout(() => {
       this.router.navigate(['/login']);

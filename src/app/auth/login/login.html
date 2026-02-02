@@ -1,5 +1,21 @@
 <app-form-wrapper [form]="loginForm" (submitted)="login()">
 
+  <div
+    *ngIf="successMsg"
+    class="alert alert-success d-flex align-items-center mb-3"
+    role="alert">
+    <i class="bi bi-check-circle-fill me-2"></i>
+    <span>{{ successMsg }}</span>
+  </div>
+
+  <div
+    *ngIf="errorMsg"
+    class="alert alert-danger d-flex align-items-center mb-3"
+    role="alert">
+    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <span>{{ errorMsg }}</span>
+  </div>
+
   <app-input
     label="Email"
     type="email"
@@ -25,10 +41,6 @@
   </app-input>
 
   <app-button label="Login" type="submit"></app-button>
-
-  <p class="text-danger text-center mt-2" *ngIf="errorMsg">
-    {{ errorMsg }}
-  </p>
 
   <p class="text-center mt-3">
     Don’t have an account?

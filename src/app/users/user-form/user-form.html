@@ -6,20 +6,31 @@
       <p class="subtitle">Fill the details below to save user information</p>
     </div>
 
-    <div class="toast-success" *ngIf="showToast">
-      ✅ User saved successfully
+    <div
+      *ngIf="successMsg"
+      class="alert alert-success d-flex align-items-center mb-3"
+      role="alert">
+      <i class="bi bi-check-circle-fill me-2"></i>
+      {{ successMsg }}
+    </div>
+
+    <div
+      *ngIf="errorMsg"
+      class="alert alert-danger d-flex align-items-center mb-3"
+      role="alert">
+      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+      {{ errorMsg }}
     </div>
 
     <app-form-wrapper [form]="form" (submitted)="submit()">
 
-      <!-- Grid -->
       <div class="form-grid">
 
         <app-input
           label="Full Name"
           [value]="form.get('name')?.value"
           (valueChange)="form.get('name')?.setValue($event)"
-          [errorMessage]="form.get('name')?.touched && form.get('name')?.invalid ? 'Name is required (min 3 chars)' : ''">
+          [errorMessage]="form.get('name')?.touched && form.get('name')?.invalid ? 'Name is required' : ''">
         </app-input>
 
         <app-input
@@ -50,7 +61,13 @@
           Employment type is required
         </small>
 
-        <!-- ✅ Status -->
+        <app-input *ngIf="form.get('employedType')?.value === 'employed'"
+          label="Company"
+          [value]="form.get('company')?.value"
+          (valueChange)="form.get('company')?.setValue($event)"
+          [errorMessage]="form.get('company')?.touched && form.get('company')?.invalid ? 'Company is required' : ''">
+        </app-input>
+
         <div>
           <app-select
             label="Status"
@@ -63,7 +80,6 @@
           </small>
         </div>
 
-        <!-- ✅ Gender (same row as Status) -->
         <div class="gender-section">
           <label class="section-label">Gender</label>
           <app-radio
@@ -78,15 +94,6 @@
 
       </div>
 
-      <!-- Company -->
-      <app-input *ngIf="form.get('employedType')?.value === 'employed'"
-        label="Company"
-        [value]="form.get('company')?.value"
-        (valueChange)="form.get('company')?.setValue($event)"
-        [errorMessage]="form.get('company')?.touched && form.get('company')?.invalid ? 'Company is required' : ''">
-      </app-input>
-
-      <!-- Skills -->
       <div class="skills-section">
         <h5>Skills</h5>
 
@@ -107,7 +114,6 @@
         <button type="button" class="add-skill-btn" (click)="addSkill()">+ Add Skill</button>
       </div>
 
-      <!-- Agree -->
       <div class="terms-section">
         <app-checkbox
           label="Agree to terms"
@@ -119,10 +125,9 @@
         </small>
       </div>
 
-      <!-- Footer -->
       <div class="form-footer">
         <app-button label="Cancel" type="button" (clicked)="goBack()"></app-button>
-        <app-button [label]="id ? 'Update' : 'Save'" type="submit" [disabled]="form.invalid"></app-button>
+        <app-button [label]="id ? 'Update' : 'Save'" type="submit"></app-button>
       </div>
 
     </app-form-wrapper>

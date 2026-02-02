@@ -7,8 +7,6 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== APP LAYOUT ===== */
-
 .app-wrapper {
   min-height: 100vh;
   display: flex;
@@ -17,11 +15,9 @@ html, body {
 
 .app-shell {
   flex: 1;
-  padding-top: 70px; /* height of navbar */
+  padding-top: 70px; 
   box-sizing: border-box;
 }
-
-/* ===================== */
 
 .mat-mdc-card {
   border-radius: 14px;
@@ -95,7 +91,7 @@ body.dark .status-pill {
 }
 .app-shell {
   flex: 1;
-  padding-top: 70px;   /* navbar height */
-  padding-bottom: 15px; /* footer height */
+  padding-top: 70px;  
+  padding-bottom: 15px; 
   box-sizing: border-box;
 }

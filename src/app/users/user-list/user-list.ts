@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../core/services/user.service';
@@ -16,7 +16,8 @@ import { UserDetailsDialog } from '../../components/user-details-dialog/user-det
 export class UserList implements OnInit {
 
   users: any[] = [];
-  @ViewChild('table') table!: SharedTable;
+  filteredUsers: any[] = [];
+  searchText = '';
 
   constructor(
     private service: UserService,
@@ -26,9 +27,23 @@ export class UserList implements OnInit {
 
   ngOnInit() {
     this.users = this.service.getUsers();
+    this.filteredUsers = [...this.users];
   }
-    exportCSV() {
-    const rows = this.users;
+
+  onSearch(value: string) {
+    this.searchText = value.toLowerCase();
+
+    this.filteredUsers = this.users.filter(u =>
+      Object.values(u).some(v =>
+        String(v).toLowerCase().includes(this.searchText)
+      )
+    );
+  }
+
+  exportCSV() {
+    if (!this.filteredUsers.length) return;
+
+    const rows = this.filteredUsers;
     const headers = Object.keys(rows[0] || {});
     const csv = [
       headers.join(','),
@@ -40,9 +55,7 @@ export class UserList implements OnInit {
     a.href = URL.createObjectURL(blob);
     a.download = 'users.csv';
     a.click();
-    }
-
-
+  }
 
   open(user: any) {
     this.dialog.open(UserDetailsDialog, {
@@ -58,10 +71,10 @@ export class UserList implements OnInit {
   delete(id: number) {
     this.service.delete(id);
     this.users = this.service.getUsers();
+    this.filteredUsers = [...this.users];
   }
 
   goAdd() {
     this.router.navigate(['/users/add']);
   }
-
 }

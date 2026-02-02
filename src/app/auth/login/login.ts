@@ -25,6 +25,7 @@ export class Login implements OnInit {
 
   loginForm!: FormGroup;
   errorMsg = '';
+  successMsg = '';
 
   constructor(
     private fb: FormBuilder,
@@ -40,22 +41,26 @@ export class Login implements OnInit {
   }
 
   login() {
-  if (this.loginForm.invalid) {
-    this.loginForm.markAllAsTouched(); // 👈 show validation errors
-    return;
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    const { email, password } = this.loginForm.value;
+
+    const success = this.auth.login(email, password);
+
+    if (!success) {
+      this.errorMsg = 'Invalid email or password';
+      this.successMsg = '';
+      return;
+    }
+
+    this.errorMsg = '';
+    this.successMsg = 'Login successful! Redirecting...';
+
+    setTimeout(() => {
+      this.router.navigate(['/home']);
+    }, 1000);
   }
-
-  const { email, password } = this.loginForm.value;
-
-  const success = this.auth.login(email, password);
-
-  if (!success) {
-    this.errorMsg = 'Invalid email or password';
-    return;
-  }
-
-  this.errorMsg = '';
-  this.router.navigate(['/home']);
-}
-
 }
