@@ -1,73 +1,82 @@
 <div class="dashboard-wrapper">
 
-  <!-- Header -->
   <div class="dashboard-header">
     <h2>Dashboard</h2>
-    <p>Overview of system statistics and recent activity</p>
+    <p>User analytics and system overview</p>
   </div>
 
-  <!-- Stats Section -->
-  <div class="stats-section">
-    <div class="stats-grid">
-
-      <div class="stat-card">
-        <div class="stat-icon">👥</div>
-        <div>
-          <div class="stat-title">Total Users</div>
-          <div class="stat-value">128</div>
-        </div>
+  <div class="stats-grid">
+    <div class="stat-card users">
+      <span>👥</span>
+      <div>
+        <small>Total Users</small>
+        <h3>180</h3>
       </div>
+    </div>
 
-      <div class="stat-card">
-        <div class="stat-icon">🟢</div>
-        <div>
-          <div class="stat-title">Active Users</div>
-          <div class="stat-value">96</div>
-        </div>
+    <div class="stat-card active">
+      <span>🟢</span>
+      <div>
+        <small>Active Users</small>
+        <h3>140</h3>
       </div>
+    </div>
 
-      <div class="stat-card">
-        <div class="stat-icon">⭐</div>
-        <div>
-          <div class="stat-title">Admins</div>
-          <div class="stat-value">12</div>
-        </div>
+    <div class="stat-card inactive">
+      <span>🔴</span>
+      <div>
+        <small>Inactive Users</small>
+        <h3>40</h3>
       </div>
+    </div>
 
-      <div class="stat-card">
-        <div class="stat-icon">🏢</div>
-        <div>
-          <div class="stat-title">Departments</div>
-          <div class="stat-value">5</div>
-        </div>
+    <div class="stat-card admin">
+      <span>⭐</span>
+      <div>
+        <small>Admins</small>
+        <h3>15</h3>
       </div>
-
     </div>
   </div>
 
-  <!-- Activity Section -->
+  <div class="charts-grid">
+    <div class="chart-card">
+      <h3>User Distribution</h3>
+      <canvas id="userChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Monthly Activity</h3>
+      <canvas id="activityChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>User Growth</h3>
+      <canvas id="growthChart"></canvas>
+    </div>
+  </div>
+
   <div class="activity-card">
     <h3>Recent Activity</h3>
-
-    <table class="activity-table">
+    <table>
       <thead>
         <tr>
           <th>User</th>
           <th>Action</th>
           <th>Status</th>
+          <th>Date</th>
         </tr>
       </thead>
-
       <tbody>
-        <tr>
-          <td>John Smith</td>
-          <td>Added New User</td>
-          <td><span class="status success">Completed</span></td>
-        </tr>
-        <tr>
-          <td>Emily Stone</td>
-          <td>Updated Profile</td>
-          <td><span class="status success">Completed</span></td>
+        <tr *ngFor="let a of activities">
+          <td>{{ a.user }}</td>
+          <td>{{ a.action }}</td>
+          <td>
+            <span class="status" [class.pending]="a.status === 'Pending'">
+              {{ a.status }}
+            </span>
+          </td>
+          <td>{{ a.date }}</td>
         </tr>
       </tbody>
     </table>

@@ -22,3 +22,15 @@
     border-radius: 14px;
   }
 }
+:host {
+  display: block;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form > * {
+  margin-bottom: 8px; /* consistent spacing between fields */
+}

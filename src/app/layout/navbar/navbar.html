@@ -1,4 +1,4 @@
-<nav class="main-navbar">
+<nav class="main-navbar" [class.scrolled]="scrolled">
   <div class="nav-wrap">
 
     <div class="brand">
@@ -7,25 +7,35 @@
     </div>
 
     <ul class="nav-links desktop">
+
       <li *ngFor="let m of menu; let i=index">
 
         <a *ngIf="!m.children"
-          [routerLink]="m.route"
-          routerLinkActive="active"
-          (click)="closeAll()">
+           [routerLink]="m.route"
+           routerLinkActive="active"
+           (click)="closeAll()">
           {{m.title}}
         </a>
 
-        <div *ngIf="m.children" class="dropdown" (click)="$event.stopPropagation(); toggleDesktop(i)">
-          <span>{{m.title}}</span>
+        <!-- 🔥 DESKTOP DROPDOWN FIXED -->
+        <div *ngIf="m.children"
+             class="dropdown"
+             (mouseenter)="openDropdown(i)"
+             (mouseleave)="closeDropdown()">
+
+          <span class="dropdown-title">
+            {{m.title}}
+            <span class="caret">▼</span>
+          </span>
 
           <div class="drop" [class.show]="openDesktopIndex===i">
             <a *ngFor="let c of m.children"
-              [routerLink]="c.route"
-              (click)="closeAll()">
+               [routerLink]="c.route"
+               (click)="closeAll()">
               {{c.title}}
             </a>
           </div>
+
         </div>
 
       </li>
@@ -49,7 +59,9 @@
     <a *ngIf="!m.children"
        [routerLink]="m.route"
        routerLinkActive="active"
-       (click)="toggleMenu()">{{m.title}}</a>
+       (click)="toggleMenu()">
+       {{m.title}}
+    </a>
 
     <div *ngIf="m.children" class="mobile-parent" (click)="toggleSub(i)">
       <span>{{m.title}}</span>
@@ -59,14 +71,16 @@
     <div class="mobile-children" *ngIf="activeIndex===i">
       <a *ngFor="let c of m.children"
          [routerLink]="c.route"
-         (click)="toggleMenu()">{{c.title}}</a>
+         (click)="toggleMenu()">
+         {{c.title}}
+      </a>
     </div>
+
   </div>
 
-  <button
-    class="mobile-logout"
-    *ngIf="isLoggedIn"
-    (click)="logout()">
+  <button class="mobile-logout"
+          *ngIf="isLoggedIn"
+          (click)="logout()">
     Logout
   </button>
 

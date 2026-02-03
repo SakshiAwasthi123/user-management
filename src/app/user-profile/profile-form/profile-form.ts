@@ -1,13 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, Validators, ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
+
 import { ProfileService } from '../../core/services/profile.service';
 import { Profile } from '../../models/profile.model';
+
+import { AppInput } from '../../shared/app-input/app-input';
+import { AppSelect } from '../../shared/app-select/app-select';
+import { AppButton } from '../../shared/app-button/app-button';
 
 @Component({
   standalone: true,
   selector: 'app-profile-form',
-  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    AppInput,
+    AppSelect,
+    AppButton
+  ],
   templateUrl: './profile-form.html',
   styleUrls: ['./profile-form.scss']
 })

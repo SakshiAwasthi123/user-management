@@ -1,21 +1,59 @@
 <div class="home-wrapper">
 
-  <!-- SLIDER -->
+  <!-- HERO SLIDER (keep as is) -->
   <div class="hero-slider">
+
     <div
       class="slide"
       *ngFor="let slide of slides; let i = index"
       [class.active]="i === currentSlide"
+      [style.backgroundImage]="'url(' + slide.image + ')'"
     >
-      <h1>{{ slide.title }}</h1>
-      <p>{{ slide.text }}</p>
+      <div class="overlay">
+        <h1>{{ slide.title }}</h1>
+        <p>{{ slide.text }}</p>
+        <div class="hero-actions">
+          <a routerLink="/dashboard" class="btn primary">Go to Dashboard</a>
+          <a routerLink="/profile" class="btn secondary">View Profile</a>
+        </div>
+      </div>
     </div>
 
     <button class="nav prev" (click)="prevSlide()">‹</button>
     <button class="nav next" (click)="nextSlide()">›</button>
   </div>
 
-  <!-- CARDS -->
+  <!-- WELCOME SECTION -->
+  <div class="welcome-box">
+    <h2>Welcome to User Management System</h2>
+    <p>
+      Manage your users, products and reports from one centralized platform.
+      Use the shortcuts below to quickly navigate through the system.
+    </p>
+  </div>
+
+  <!-- QUICK ACTIONS -->
+  <div class="quick-actions">
+
+    <a routerLink="/users/add" class="quick-card">
+      ➕ Add User
+    </a>
+
+    <a routerLink="/products/add" class="quick-card">
+      📦 Add Product
+    </a>
+
+    <a routerLink="/reports/monthly" class="quick-card">
+      📊 Generate Report
+    </a>
+
+    <a routerLink="/profile" class="quick-card">
+      👤 Manage Profile
+    </a>
+
+  </div>
+
+  <!-- FEATURE CARDS -->
   <div class="card-grid">
 
     <a routerLink="/dashboard" class="home-card">
@@ -42,6 +80,17 @@
       <p>Generate monthly and yearly reports</p>
     </a>
 
+  </div>
+
+  <!-- INFO SECTION -->
+  <div class="info-section">
+    <h2>Why use this system?</h2>
+    <ul>
+      <li>✔ Centralized user & role management</li>
+      <li>✔ Easy product inventory tracking</li>
+      <li>✔ Automated monthly & yearly reports</li>
+      <li>✔ Secure role-based access</li>
+    </ul>
   </div>
 
 </div>

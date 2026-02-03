@@ -10,21 +10,25 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./public-home.scss']
 })
 export class PublicHome implements OnInit {
-
   slides = [
-    {
-      title: 'User Management System',
-      text: 'Manage users, roles and permissions easily.'
-    },
-    {
-      title: 'Product & Inventory',
-      text: 'Track and manage your products efficiently.'
-    },
-    {
-      title: 'Reports & Analytics',
-      text: 'Generate monthly and yearly reports quickly.'
-    }
-  ];
+  {
+    image: 'assets/slider/slide1.jpg',
+    title: 'User Management System',
+    text: 'Manage users, roles and permissions easily'
+  },
+  {
+    image: 'assets/slider/slide2.jpg',
+    title: 'Product & Inventory',
+    text: 'Track and manage your products efficiently'
+  },
+  {
+    image: 'assets/slider/slide3.jpg',
+    title: 'Reports & Analytics',
+    text: 'Generate monthly and yearly reports quickly'
+  }
+];
+
+
 
   currentSlide = 0;
 

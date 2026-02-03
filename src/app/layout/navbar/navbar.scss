@@ -1,6 +1,9 @@
 .main-navbar{
-  background:linear-gradient(90deg,#050a24,#070d29);
-  height:70px;
+  background:linear-gradient(
+      90deg,
+      #0b1b3a,
+      #0f2a5f);
+  height:60px; 
   display:flex;
   align-items:center;
   position:fixed;
@@ -8,6 +11,11 @@
   left:0;
   top:0;
   z-index:4000;
+  transition:.3s;
+}
+
+.main-navbar.scrolled{
+  box-shadow:0 8px 20px rgba(0,0,0,.4);
 }
 
 .nav-wrap{
@@ -21,17 +29,35 @@
 .brand{
   display:flex;
   align-items:center;
-  gap:10px;
+  gap:12px;
   color:white;
   font-weight:600;
 }
-.brand img{height:36px;}
+.brand img{
+  height:62px; 
+  width:auto;
+  flex-shrink:0;
+  margin-top: 10px;
+}
+.brand span{
+  font-size:18px;
+  line-height:1;
+  white-space:nowrap; 
+}
+
+.nav-links,
+.desktop{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
 
 .desktop{
   display:flex;
-  gap:26px;
+  gap:24px;
   align-items:center;
 }
+
 .desktop li{position:relative;}
 
 .desktop a,
@@ -40,22 +66,50 @@
   text-decoration:none;
   cursor:pointer;
   font-weight:500;
+  position:relative;
 }
-.desktop .active{color:#7b4bff;}
+
+
+.desktop a:hover,
+.desktop span:hover{
+  color:#eae8f2;
+  background-color: #7b4bff;
+}
+
+.desktop .active{
+  color:#7b4bff;
+}
+
 .logout{color:#ff5252;}
+
+.dropdown-title{
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+.caret{
+  font-size:11px;
+  opacity:.7;
+  transition:.3s;
+}
+
+.dropdown:hover .caret{
+  transform:rotate(180deg);
+}
 
 .dropdown .drop{
   display:none;
   position:absolute;
-  top:48px;
+  top:46px;
   right:0;
   background:#0b102d;
   border-radius:14px;
-  padding:14px;
-  box-shadow:0 20px 50px rgba(0,0,0,.6);
-  min-width:200px;
+  padding:12px;
+  box-shadow:0 20px 40px rgba(0,0,0,.6);
+  min-width:190px;
   z-index:4100;
-  pointer-events:auto;
+  animation:fadeIn .2s ease;
 }
 
 .dropdown .drop.show{
@@ -63,19 +117,25 @@
   flex-direction:column;
 }
 
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(8px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
 .drop a{
   display:block;
-  padding:12px 16px;
+  padding:10px 14px;
   border-radius:10px;
 }
-.drop a:hover{background:#7d5cd6;}
+.drop a:hover{
+  background:#7d5cd6;
+}
 
 .hamburger{
   display:none;
-  font-size:28px;
+  font-size:26px;
   color:white;
   cursor:pointer;
-  position:relative;
   z-index:4200;
 }
 
@@ -83,28 +143,26 @@
   position:fixed;
   inset:0;
   background:rgba(0,0,0,.55);
-  backdrop-filter:blur(8px);
+  backdrop-filter:blur(6px);
   opacity:0;
   visibility:hidden;
   transition:.3s;
   z-index:3500;
-  pointer-events:none;
 }
 .mobile-overlay.show{
   opacity:1;
   visibility:visible;
-  pointer-events:auto;
 }
 
 .mobile-drawer{
   position:fixed;
-  top:70px;
+  top:60px;
   right:0;
-  width:300px;
-  height:calc(100vh - 70px);
+  width:260px; 
+  height:calc(100vh - 60px);
   background:linear-gradient(180deg,#040827,#020617);
-  padding:24px 18px;
-  border-radius:26px 0 0 26px;
+  padding:20px 14px;
+  border-radius:22px 0 0 22px;
   transform:translateX(100%);
   opacity:0;
   visibility:hidden;
@@ -120,38 +178,42 @@
 
 .mobile-drawer a,
 .mobile-parent{
-  height:56px;
-  border-radius:18px;
+  height:48px; 
+  border-radius:16px;
   background:#0b1033;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 22px;
+  padding:0 18px;
   color:white;
-  font-size:16px;
-  margin-bottom:14px;
+  font-size:15px;
+  margin-bottom:12px;
   text-decoration:none;
 }
-.mobile-drawer a.active{background:#8c73d0;}
+
+.mobile-drawer a.active{
+  background:#8c73d0;
+}
 
 .mobile-children{
-  padding-left:12px;
+  padding-left:10px;
   display:flex;
   flex-direction:column;
-  gap:12px;
+  gap:10px;
 }
+
 .mobile-children a{
-  height:48px;
-  font-size:15px;
-  padding-left:32px;
+  height:44px;
+  font-size:14px;
+  padding-left:26px;
   background:#070b22;
 }
 
 .mobile-logout{
   width:100%;
-  height:60px;
-  margin-top:20px;
-  border-radius:22px;
+  height:50px;
+  margin-top:16px;
+  border-radius:18px;
   border:none;
   background:#ba3131;
   color:white;
@@ -166,19 +228,10 @@
 @media(min-width:769px){
   .mobile-drawer,
   .mobile-overlay{display:none!important;}
-  .mobile-drawer{box-shadow:none;}
 }
 
 .main-layout,
 .router-wrapper,
 .page-container{
-  padding-top:70px;
-}
-.main-navbar {
-  background: linear-gradient(90deg, #0b1b3a, #0f2a5f);
-}
-
-.nav-links a.active {
-  border-bottom: 2px solid #4f46e5;
-  color: #4f46e5;
+  padding-top:60px;
 }

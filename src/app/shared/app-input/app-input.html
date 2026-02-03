@@ -1,11 +1,13 @@
-<div class="mb-3">
+<div class="form-group">
   <label class="form-label">{{ label }}</label>
+
   <input
     class="form-control"
     [type]="type"
     [value]="value"
     (input)="onInput($event.target.value)"
   />
+
   <small class="text-danger" *ngIf="errorMessage">
     {{ errorMessage }}
   </small>

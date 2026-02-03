@@ -1,50 +1,62 @@
 <form [formGroup]="form" class="profile-form">
 
   <div class="grid">
-    <div>
-      <label>Full Name</label>
-      <input formControlName="name" placeholder="Full name">
-    </div>
 
-    <div>
-      <label>Email</label>
-      <input formControlName="email" placeholder="Email address">
-    </div>
+    <app-input
+      label="Full Name"
+      placeholder="Full name"
+      formControlName="name">
+    </app-input>
 
-    <div>
-      <label>Department</label>
-      <select formControlName="department">
-        <option value="">Select</option>
-        <option>HR</option>
-        <option>Tech</option>
-        <option>Sales</option>
-      </select>
-    </div>
-  </div>
-<div class="field full">
-  <label>Skills</label>
+    <app-input
+      label="Email"
+      type="email"
+      placeholder="Email address"
+      formControlName="email">
+    </app-input>
 
-  <div class="skill-row">
-    <input type="text"
-           formControlName="skillInput"
-           placeholder="Type skill & press Add" />
+    <app-select
+      label="Department"
+      formControlName="department"
+      [options]="[
+        { label: 'HR', value: 'HR' },
+        { label: 'Tech', value: 'Tech' },
+        { label: 'Sales', value: 'Sales' }
+      ]">
+    </app-select>
 
-    <button type="button" class="btn-skill" (click)="addSkill()">Add</button>
   </div>
 
-  <div class="skill-tags" *ngIf="skills.length">
-    <span *ngFor="let s of skills; let i=index">
-      {{s}}
-      <b (click)="removeSkill(i)">×</b>
-    </span>
+  <div class="field full">
+    <label>Skills</label>
+
+    <div class="skill-row">
+
+      <app-input
+        placeholder="Type skill & press Add"
+        formControlName="skillInput">
+      </app-input>
+
+      <app-button
+        label="Add"
+        type="button"
+        (clicked)="addSkill()">
+      </app-button>
+
+    </div>
+
+    <div class="skill-tags" *ngIf="skills.length">
+      <span *ngFor="let s of skills; let i=index">
+        {{ s }}
+        <b (click)="removeSkill(i)">×</b>
+      </span>
+    </div>
   </div>
-</div>
 
-
-<div class="action-bar">
-  <button type="reset" class="btn cancel">Cancel</button>
-  <button type="button" class="btn reset" (click)="form.reset()">Reset</button>
-  <button type="button" class="btn save" (click)="save()">Save Profile</button>
-</div>
+  <div class="action-bar">
+    <app-button label="Cancel" type="reset"></app-button>
+    <app-button label="Reset" type="button" (clicked)="form.reset()"></app-button>
+    <app-button label="Save Profile" type="button" (clicked)="save()"></app-button>
+  </div>
 
 </form>
