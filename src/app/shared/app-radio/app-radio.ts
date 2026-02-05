@@ -1,21 +1,28 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BaseFormControl } from '../form-control.base';
 
 @Component({
   selector: 'app-radio',
   standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './app-radio.html'
+  imports: [CommonModule],
+  templateUrl: './app-radio.html',
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AppRadio),
+    multi: true
+  }]
 })
-export class AppRadio {
+export class AppRadio extends BaseFormControl<any> {
+
   @Input() label = '';
   @Input() options: { label: string; value: any }[] = [];
-  @Input() selectedValue: any;
+  @Input() errorMessage = '';
 
-  @Output() valueChange = new EventEmitter<any>();
-
-  onChange(val: any) {
-    this.valueChange.emit(val);
+  select(value: any): void {
+    this.value = value;
+    this.onChange(value);
+    this.onTouched();
   }
 }

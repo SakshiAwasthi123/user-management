@@ -1,7 +1,11 @@
 <button
+  class="btn btn-primary w-100"
   [type]="type"
-  [disabled]="disabled"
-  (click)="clicked.emit()"
-  class="btn btn-primary w-100">
-  {{ label }}
+  [disabled]="disabled || loading"
+>
+  <span *ngIf="!loading">{{ label }}</span>
+  <span *ngIf="loading">
+    <i class="spinner-border spinner-border-sm me-2"></i>
+    Loading...
+  </span>
 </button>

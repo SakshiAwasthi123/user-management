@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, Validators, ReactiveFormsModule, FormsModule, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  Validators,
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl
+} from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { ProfileService } from '../../core/services/profile.service';
 import { Profile } from '../../models/profile.model';
@@ -15,7 +22,6 @@ import { AppButton } from '../../shared/app-button/app-button';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    FormsModule,
     AppInput,
     AppSelect,
     AppButton
@@ -23,49 +29,83 @@ import { AppButton } from '../../shared/app-button/app-button';
   templateUrl: './profile-form.html',
   styleUrls: ['./profile-form.scss']
 })
-export class ProfileForm implements OnInit {
+export class ProfileForm implements OnInit, OnDestroy {
 
   form!: FormGroup;
   skills: string[] = [];
 
-  constructor(private fb: FormBuilder, private service: ProfileService) {}
+  private sub!: Subscription;
 
-  ngOnInit() {
+  constructor(
+    private fb: FormBuilder,
+    private service: ProfileService
+  ) {}
+
+  ngOnInit(): void {
     this.form = this.fb.group({
-      name: ['', Validators.required],
-      email: ['', Validators.required],
-      department: ['', Validators.required],
-      skillInput: ['']
+      name: this.fb.control('', Validators.required),
+      email: this.fb.control('', [Validators.required, Validators.email]),
+      department: this.fb.control('', Validators.required),
+      skillInput: this.fb.control('')
     });
 
-    this.service.profile$.subscribe(p => {
-      if (p) {
-        this.form.patchValue(p);
-        this.skills = [...(p.skills || [])];
+    this.sub = this.service.profile$.subscribe(profile => {
+      if (profile) {
+        this.form.patchValue(profile);
+        this.skills = [...(profile.skills || [])];
       }
     });
   }
 
-  addSkill() {
-    const v = this.form.get('skillInput')?.value?.trim();
-    if (v) {
-      this.skills.push(v);
-      this.form.get('skillInput')?.reset();
-    }
+  // ───────────── Typed getters (IMPORTANT) ─────────────
+
+  get name(): FormControl {
+    return this.form.get('name') as FormControl;
   }
 
-  removeSkill(i: number) {
-    this.skills.splice(i, 1);
+  get email(): FormControl {
+    return this.form.get('email') as FormControl;
   }
 
-  save() {
-    if (this.form.valid) {
-      const payload: Profile = {
-        ...this.form.value,
-        skills: this.skills
-      };
-      this.service.save(payload);
-      alert('Profile Updated Successfully');
-    }
+  get department(): FormControl {
+    return this.form.get('department') as FormControl;
+  }
+
+  get skillInput(): FormControl {
+    return this.form.get('skillInput') as FormControl;
+  }
+
+  // ───────────── Skills logic ─────────────
+
+  addSkill(): void {
+    const value = this.skillInput.value?.trim();
+    if (!value) return;
+
+    this.skills.push(value);
+    this.skillInput.reset();
+  }
+
+  removeSkill(index: number): void {
+    this.skills.splice(index, 1);
+  }
+
+  // ───────────── Save ─────────────
+
+  save(): void {
+    this.form.markAllAsTouched();
+
+    if (this.form.invalid) return;
+
+    const payload: Profile = {
+      ...this.form.value,
+      skills: this.skills
+    };
+
+    this.service.save(payload);
+    alert('Profile Updated Successfully');
+  }
+
+  ngOnDestroy(): void {
+    this.sub?.unsubscribe();
   }
 }

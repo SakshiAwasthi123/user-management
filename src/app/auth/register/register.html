@@ -1,28 +1,11 @@
 <app-form-wrapper [form]="form" (submitted)="register()">
 
-  <div
-    *ngIf="successMsg"
-    class="alert alert-success d-flex align-items-center mb-3"
-    role="alert">
-    <i class="bi bi-check-circle-fill me-2"></i>
-    <span>{{ successMsg }}</span>
-  </div>
-
-  <div
-    *ngIf="errorMsg"
-    class="alert alert-danger d-flex align-items-center mb-3"
-    role="alert">
-    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-    <span>{{ errorMsg }}</span>
-  </div>
-
   <app-input
     label="Email"
     type="email"
-    [value]="form.get('email')?.value"
-    (valueChange)="form.get('email')?.setValue($event)"
+    [formControl]="email"
     [errorMessage]="
-      form.get('email')?.touched && form.get('email')?.invalid
+      email.touched && email.invalid
         ? 'Valid email required'
         : ''
     ">
@@ -31,10 +14,9 @@
   <app-input
     label="Password"
     type="password"
-    [value]="form.get('password')?.value"
-    (valueChange)="form.get('password')?.setValue($event)"
+    [formControl]="password"
     [errorMessage]="
-      form.get('password')?.touched && form.get('password')?.invalid
+      password.touched && password.invalid
         ? 'Password required'
         : ''
     ">
@@ -43,31 +25,24 @@
   <app-input
     label="Confirm Password"
     type="password"
-    [value]="form.get('confirmPassword')?.value"
-    (valueChange)="form.get('confirmPassword')?.setValue($event)"
+    [formControl]="confirmPassword"
     [errorMessage]="
-      form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid
+      confirmPassword.touched && confirmPassword.invalid
         ? 'Confirm password required'
         : ''
     ">
   </app-input>
 
-  <div class="mb-3">
-    <label class="form-label">Role</label>
-    <select
-      class="form-control"
-      [value]="form.get('role')?.value"
-      (change)="form.get('role')?.setValue($any($event.target).value)">
-      <option value="">Select role</option>
-      <option value="User">User</option>
-      <option value="Admin">Admin</option>
-    </select>
-
-    <small class="text-danger"
-      *ngIf="form.get('role')?.touched && form.get('role')?.invalid">
-      Role is required
-    </small>
-  </div>
+  <app-select
+    label="Role"
+    [options]="roles"
+    [formControl]="role"
+    [errorMessage]="
+      role.touched && role.invalid
+        ? 'Role is required'
+        : ''
+    ">
+  </app-select>
 
   <app-button label="Register" type="submit"></app-button>
 

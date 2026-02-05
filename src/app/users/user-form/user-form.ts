@@ -1,5 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormControl,
+  ReactiveFormsModule
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -32,7 +39,7 @@ import { FormWrapper } from '../../shared/form-wrapper/form-wrapper';
 export class UserForm implements OnInit {
 
   form!: FormGroup;
-  id!: number | null;
+  id: number | null = null;
 
   errorMsg = '';
   successMsg = '';
@@ -67,71 +74,128 @@ export class UserForm implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
+
     this.form = this.fb.group({
       id: [null],
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      department: ['', Validators.required],
-      employedType: ['', Validators.required],
-      company: [''],
-      status: ['', Validators.required],
-      gender: ['', Validators.required],
-      skills: this.fb.array([]),
-      agree: [false, Validators.requiredTrue],
-      role: ['User']
+      name: this.fb.control('', Validators.required),
+      email: this.fb.control('', [Validators.required, Validators.email]),
+      department: this.fb.control('', Validators.required),
+      employedType: this.fb.control('', Validators.required),
+      company: this.fb.control(''),
+      status: this.fb.control('', Validators.required),
+      gender: this.fb.control('', Validators.required),
+      skills: this.fb.array<FormControl<string>>([]),
+      agree: this.fb.control(false, Validators.requiredTrue),
+      role: this.fb.control('User')
     });
 
-    this.form.get('employedType')?.valueChanges.subscribe(val => {
-      const company = this.form.get('company');
-      if (val === 'employed') {
-        company?.setValidators(Validators.required);
+    this.employedType.valueChanges.subscribe(value => {
+      if (value === 'employed') {
+        this.company.setValidators(Validators.required);
       } else {
-        company?.clearValidators();
-        company?.setValue('');
+        this.company.clearValidators();
+        this.company.setValue('');
       }
-      company?.updateValueAndValidity();
+      this.company.updateValueAndValidity();
     });
 
-    // Load user for edit
-    this.route.paramMap.subscribe(p => {
-      const id = p.get('id');
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+
       if (id) {
         this.id = +id;
         const user = this.service.getUserById(this.id);
-        if (user) this.form.patchValue(user);
+
+        if (user) {
+          this.form.patchValue(user);
+
+          if (user.skills?.length) {
+            user.skills.forEach((s: string) => {
+              this.skillsArray.push(
+                new FormControl<string>(s, {
+                  nonNullable: true,
+                  validators: Validators.required
+                })
+              );
+            });
+          }
+        }
       }
     });
 
-    // Clear messages when user edits form
     this.form.valueChanges.subscribe(() => {
       this.errorMsg = '';
       this.successMsg = '';
     });
   }
 
-  get skills(): FormArray {
-    return this.form.get('skills') as FormArray;
+
+  get name(): FormControl {
+    return this.form.get('name') as FormControl;
   }
 
-  addSkill() {
-    this.skills.push(this.fb.control('', Validators.required));
+  get email(): FormControl {
+    return this.form.get('email') as FormControl;
   }
 
-  removeSkill(i: number) {
-    this.skills.removeAt(i);
+  get department(): FormControl {
+    return this.form.get('department') as FormControl;
   }
 
-  submit() {
+  get employedType(): FormControl {
+    return this.form.get('employedType') as FormControl;
+  }
+
+  get company(): FormControl {
+    return this.form.get('company') as FormControl;
+  }
+
+  get status(): FormControl {
+    return this.form.get('status') as FormControl;
+  }
+
+  get gender(): FormControl {
+    return this.form.get('gender') as FormControl;
+  }
+
+  get agree(): FormControl {
+    return this.form.get('agree') as FormControl;
+  }
+
+
+  get skillsArray(): FormArray<FormControl<string>> {
+    return this.form.get('skills') as FormArray<FormControl<string>>;
+  }
+
+  get skillsControls(): FormControl<string>[] {
+    return this.skillsArray.controls;
+  }
+
+  addSkill(): void {
+    this.skillsArray.push(
+      new FormControl<string>('', {
+        nonNullable: true,
+        validators: Validators.required
+      })
+    );
+  }
+
+  removeSkill(index: number): void {
+    this.skillsArray.removeAt(index);
+  }
+
+  // ───────────── Submit ─────────────
+
+  submit(): void {
     this.form.markAllAsTouched();
 
     if (this.form.invalid) {
       this.errorMsg = 'Please fix form errors';
-      this.successMsg = '';
       return;
     }
 
-    const data = this.form.value;
+    const data = { ...this.form.value };
 
     data.status =
       data.status?.toLowerCase() === 'active'
@@ -140,7 +204,6 @@ export class UserForm implements OnInit {
 
     this.service.save(data);
 
-    this.errorMsg = '';
     this.successMsg = this.id
       ? 'User updated successfully!'
       : 'User added successfully!';
@@ -150,7 +213,7 @@ export class UserForm implements OnInit {
     }, 1200);
   }
 
-  goBack() {
+  goBack(): void {
     this.router.navigateByUrl('/users/list');
   }
 }

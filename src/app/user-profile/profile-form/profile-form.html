@@ -2,22 +2,25 @@
 
   <div class="grid">
 
+    <!-- NAME -->
     <app-input
       label="Full Name"
       placeholder="Full name"
-      formControlName="name">
+      [formControl]="name">
     </app-input>
 
+    <!-- EMAIL -->
     <app-input
       label="Email"
       type="email"
       placeholder="Email address"
-      formControlName="email">
+      [formControl]="email">
     </app-input>
 
+    <!-- DEPARTMENT -->
     <app-select
       label="Department"
-      formControlName="department"
+      [formControl]="department"
       [options]="[
         { label: 'HR', value: 'HR' },
         { label: 'Tech', value: 'Tech' },
@@ -27,6 +30,7 @@
 
   </div>
 
+  <!-- SKILLS -->
   <div class="field full">
     <label>Skills</label>
 
@@ -34,7 +38,7 @@
 
       <app-input
         placeholder="Type skill & press Add"
-        formControlName="skillInput">
+        [formControl]="skillInput">
       </app-input>
 
       <app-button
@@ -46,13 +50,14 @@
     </div>
 
     <div class="skill-tags" *ngIf="skills.length">
-      <span *ngFor="let s of skills; let i=index">
+      <span *ngFor="let s of skills; let i = index">
         {{ s }}
         <b (click)="removeSkill(i)">×</b>
       </span>
     </div>
   </div>
 
+  <!-- ACTIONS -->
   <div class="action-bar">
     <app-button label="Cancel" type="reset"></app-button>
     <app-button label="Reset" type="button" (clicked)="form.reset()"></app-button>

@@ -1,11 +1,14 @@
 <div class="form-group">
-  <label class="form-label">{{ label }}</label>
+  <label *ngIf="label">{{ label }}</label>
 
   <input
     class="form-control"
     [type]="type"
-    [value]="value"
-    (input)="onInput($event.target.value)"
+    [placeholder]="placeholder"
+    [value]="value || ''"
+    [disabled]="disabled"
+    (input)="onChange($any($event.target).value)"
+    (blur)="onTouched()"
   />
 
   <small class="text-danger" *ngIf="errorMessage">

@@ -1,55 +1,22 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BaseFormControl } from '../form-control.base';
 
 @Component({
   selector: 'app-input',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './app-input.html',
-  styleUrls: ['./app-input.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AppInput),
-      multi: true
-    }
-  ]
+  providers: [{
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AppInput),
+    multi: true
+  }]
 })
-export class AppInput implements ControlValueAccessor {
-
+export class AppInput extends BaseFormControl<string> {
   @Input() label = '';
-  @Input() type = 'text';
+  @Input() type: 'text' | 'email' | 'password' | 'number' = 'text';
+  @Input() placeholder = '';
   @Input() errorMessage = '';
-
-  @Input() value: any; 
-  @Output() valueChange = new EventEmitter<any>(); 
-
-  disabled = false;
-
-  onChange = (val: any) => {};
-  onTouched = () => {};
-
-  writeValue(val: any): void {
-    this.value = val;
-  }
-
-  registerOnChange(fn: any): void {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn;
-  }
-
-  setDisabledState(isDisabled: boolean): void {
-    this.disabled = isDisabled;
-  }
-
-  onInput(val: any) {
-    this.value = val;
-    this.valueChange.emit(val);   
-    this.onChange(val);           
-    this.onTouched();
-  }
 }

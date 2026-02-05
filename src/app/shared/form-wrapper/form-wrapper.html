@@ -1,3 +1,6 @@
-<form [formGroup]="form" (ngSubmit)="submitted.emit()">
+<form
+  [formGroup]="form"
+  (ngSubmit)="submitted.emit()"
+>
   <ng-content></ng-content>
 </form>

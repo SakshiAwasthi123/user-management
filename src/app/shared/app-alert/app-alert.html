@@ -1,0 +1,12 @@
+<div *ngIf="message" class="alert-box" [ngClass]="type">
+  <span class="icon">
+    <span *ngIf="type === 'success'">✔</span>
+    <span *ngIf="type === 'error'">✖</span>
+    <span *ngIf="type === 'warning'">⚠</span>
+    <span *ngIf="type === 'info'">ℹ</span>
+  </span>
+
+  <span class="text">
+    {{ message }}
+  </span>
+</div>

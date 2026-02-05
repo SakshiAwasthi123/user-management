@@ -6,19 +6,11 @@
       <p class="subtitle">Fill the details below to save user information</p>
     </div>
 
-    <div
-      *ngIf="successMsg"
-      class="alert alert-success d-flex align-items-center mb-3"
-      role="alert">
-      <i class="bi bi-check-circle-fill me-2"></i>
+    <div *ngIf="successMsg" class="alert alert-success mb-3">
       {{ successMsg }}
     </div>
 
-    <div
-      *ngIf="errorMsg"
-      class="alert alert-danger d-flex align-items-center mb-3"
-      role="alert">
-      <i class="bi bi-exclamation-triangle-fill me-2"></i>
+    <div *ngIf="errorMsg" class="alert alert-danger mb-3">
       {{ errorMsg }}
     </div>
 
@@ -26,105 +18,105 @@
 
       <div class="form-grid">
 
+        <!-- NAME -->
         <app-input
           label="Full Name"
-          [value]="form.get('name')?.value"
-          (valueChange)="form.get('name')?.setValue($event)"
-          [errorMessage]="form.get('name')?.touched && form.get('name')?.invalid ? 'Name is required' : ''">
+          [formControl]="name"
+          [errorMessage]="name.touched && name.invalid ? 'Name is required' : ''">
         </app-input>
 
+        <!-- EMAIL -->
         <app-input
           label="Email"
           type="email"
-          [value]="form.get('email')?.value"
-          (valueChange)="form.get('email')?.setValue($event)"
-          [errorMessage]="form.get('email')?.touched && form.get('email')?.invalid ? 'Valid email required' : ''">
+          [formControl]="email"
+          [errorMessage]="email.touched && email.invalid ? 'Valid email required' : ''">
         </app-input>
 
+        <!-- DEPARTMENT -->
         <app-select
           label="Department"
           [options]="departmentOptions"
-          [selectedValue]="form.get('department')?.value"
-          (selectionChange)="form.get('department')?.setValue($event)">
+          [formControl]="department"
+          [errorMessage]="department.touched && department.invalid ? 'Department is required' : ''">
         </app-select>
-        <small class="error" *ngIf="form.get('department')?.touched && form.get('department')?.invalid">
-          Department is required
-        </small>
 
+        <!-- EMPLOYMENT TYPE -->
         <app-select
           label="Employment Type"
           [options]="employmentOptions"
-          [selectedValue]="form.get('employedType')?.value"
-          (selectionChange)="form.get('employedType')?.setValue($event)">
+          [formControl]="employedType"
+          [errorMessage]="employedType.touched && employedType.invalid ? 'Employment type is required' : ''">
         </app-select>
-        <small class="error" *ngIf="form.get('employedType')?.touched && form.get('employedType')?.invalid">
-          Employment type is required
-        </small>
 
-        <app-input *ngIf="form.get('employedType')?.value === 'employed'"
+        <!-- COMPANY -->
+        <app-input
+          *ngIf="employedType.value === 'employed'"
           label="Company"
-          [value]="form.get('company')?.value"
-          (valueChange)="form.get('company')?.setValue($event)"
-          [errorMessage]="form.get('company')?.touched && form.get('company')?.invalid ? 'Company is required' : ''">
+          [formControl]="company"
+          [errorMessage]="company.touched && company.invalid ? 'Company is required' : ''">
         </app-input>
 
-        <div>
-          <app-select
-            label="Status"
-            [options]="statusOptions"
-            [selectedValue]="form.get('status')?.value"
-            (selectionChange)="form.get('status')?.setValue($event)">
-          </app-select>
-          <small class="error" *ngIf="form.get('status')?.touched && form.get('status')?.invalid">
-            Status is required
-          </small>
-        </div>
+        <!-- STATUS -->
+        <app-select
+          label="Status"
+          [options]="statusOptions"
+          [formControl]="status"
+          [errorMessage]="status.touched && status.invalid ? 'Status is required' : ''">
+        </app-select>
 
+        <!-- GENDER -->
         <div class="gender-section">
           <label class="section-label">Gender</label>
+
           <app-radio
             [options]="genderOptions"
-            [selectedValue]="form.get('gender')?.value"
-            (valueChange)="form.get('gender')?.setValue($event)">
+            [formControl]="gender">
           </app-radio>
-          <small class="error" *ngIf="form.get('gender')?.touched && form.get('gender')?.invalid">
+
+          <small class="error" *ngIf="gender.touched && gender.invalid">
             Gender is required
           </small>
         </div>
 
       </div>
 
+      <!-- SKILLS -->
       <div class="skills-section">
         <h5>Skills</h5>
 
-        <div class="skill-row" *ngFor="let skill of skills.controls; let i=index">
+        <div
+          class="skill-row"
+          *ngFor="let ctrl of skillsControls; let i = index">
+
           <app-input
-            [value]="skill.value"
-            (valueChange)="skill.setValue($event)"
-            [errorMessage]="skill.touched && skill.invalid ? 'Skill required' : ''">
+            [formControl]="ctrl"
+            [errorMessage]="ctrl.touched && ctrl.invalid ? 'Skill required' : ''">
           </app-input>
 
-          <button type="button" class="remove-btn" (click)="removeSkill(i)">✕</button>
+          <button type="button" (click)="removeSkill(i)">✕</button>
         </div>
 
-        <small class="error" *ngIf="skills.length === 0 && form.touched">
+        <small class="error" *ngIf="skillsControls.length === 0 && form.touched">
           At least one skill is required
         </small>
 
-        <button type="button" class="add-skill-btn" (click)="addSkill()">+ Add Skill</button>
+        <button type="button" (click)="addSkill()">+ Add Skill</button>
       </div>
 
+      <!-- TERMS -->
       <div class="terms-section">
         <app-checkbox
           label="Agree to terms"
-          [value]="form.get('agree')?.value"
-          (valueChange)="form.get('agree')?.setValue($event)">
+          [formControl]="agree">
         </app-checkbox>
-        <small class="error" *ngIf="form.get('agree')?.touched && form.get('agree')?.invalid">
+
+        <small class="error" *ngIf="agree.touched && agree.invalid">
           You must accept terms
         </small>
       </div>
 
+      <!-- FOOTER -->
       <div class="form-footer">
         <app-button label="Cancel" type="button" (clicked)="goBack()"></app-button>
         <app-button [label]="id ? 'Update' : 'Save'" type="submit"></app-button>
